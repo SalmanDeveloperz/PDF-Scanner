@@ -1,4 +1,9 @@
-# PDF Scanner - Document Scanner Website
+<div align="center">
+  <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+    <img src="https://github.com/user-attachments/assets/8459da64-e2d7-4d04-84cb-00fca988487b" width="60" height="60" alt="PDF Scanner Logo">
+    <h1 style="margin: 0;">PDF Scanner - Document Scanner</h1>
+  </div>
+</div>
 
 Official product website for **PDF Scanner - Document Scanner**, an Android productivity application offered by Tools & Utilities Apps. The site presents the app's real interface, core scanning workflow, current release details, public review excerpts, and Google Play download destination.
 
