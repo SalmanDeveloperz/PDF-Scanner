@@ -1,0 +1,193 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import {
+  ArrowRight,
+  Camera,
+  Check,
+  ExternalLink,
+  FileSearch,
+  Images,
+  Menu,
+  ScanLine,
+  ShieldCheck,
+  Star,
+  X,
+} from "lucide-react";
+
+import scanAnything from "@/assets/product/scan-anything.png.asset.json";
+import idPassport from "@/assets/product/id-passport.png.asset.json";
+import hdFilters from "@/assets/product/hd-filters.png.asset.json";
+import imageToPdf from "@/assets/product/image-to-pdf.png.asset.json";
+import ocrText from "@/assets/product/ocr-text.png.asset.json";
+import shareDocuments from "@/assets/product/share-documents.png.asset.json";
+import pdfToolbox from "@/assets/product/pdf-toolbox.png.asset.json";
+import { Button } from "@/components/ui/button";
+import {
+  appDetails,
+  COMPANY_URL,
+  PLAY_STORE_URL,
+  productFacts,
+  reviews,
+  SUPPORT_EMAIL,
+} from "@/content/product";
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "PDF Scanner - Document Scanner for Android" },
+      { name: "description", content: "Scan documents, receipts, IDs, books, and photos into high-quality PDF files. Convert images, extract text with OCR, organize, and share." },
+      { property: "og:title", content: "PDF Scanner - Document Scanner" },
+      { property: "og:description", content: "A fast Android document scanner with auto edge detection, HD filters, image-to-PDF conversion, OCR, and PDF tools." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "PDF Scanner - Document Scanner",
+          applicationCategory: "ProductivityApplication",
+          operatingSystem: "Android 7.0 and up",
+          softwareVersion: "6.3.0",
+          datePublished: "2020-09-20",
+          dateModified: "2026-08-27",
+          installUrl: PLAY_STORE_URL,
+          author: { "@type": "Organization", name: "Tools & Utilities Apps", url: COMPANY_URL },
+          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", ratingCount: "476000" },
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        }),
+      },
+    ],
+  }),
+  component: HomePage,
+});
+
+function Brand({ inverse = false }: { inverse?: boolean }) {
+  return (
+    <a href="#top" className="flex shrink-0 items-center gap-2.5" aria-label="PDF Scanner home">
+      <span className="grid size-9 place-items-center rounded-md bg-primary text-primary-foreground"><ScanLine className="size-5" /></span>
+      <span className={`text-base font-extrabold ${inverse ? "text-footer-foreground" : "text-foreground"}`}>PDF Scanner</span>
+    </a>
+  );
+}
+
+function Header() {
+  const [open, setOpen] = useState(false);
+  const links = [
+    ["Features", "#features"],
+    ["How it works", "#how-it-works"],
+    ["Reviews", "#reviews"],
+    ["App details", "#details"],
+  ];
+  return (
+    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center px-5 lg:px-8">
+        <Brand />
+        <nav className="ml-auto hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
+          {links.map(([label, href]) => <a key={label} href={href} className="text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">{label}</a>)}
+        </nav>
+        <div className="ml-8 hidden lg:block">
+          <Button asChild><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get the app <ExternalLink /></a></Button>
+        </div>
+        <Button variant="ghost" size="icon" className="ml-auto lg:hidden" onClick={() => setOpen((value) => !value)} aria-label={open ? "Close menu" : "Open menu"}>{open ? <X /> : <Menu />}</Button>
+      </div>
+      {open && (
+        <nav className="border-t border-border bg-background px-5 py-4 lg:hidden" aria-label="Mobile navigation">
+          {links.map(([label, href]) => <a key={label} href={href} onClick={() => setOpen(false)} className="block border-b border-border py-3 text-sm font-semibold text-foreground">{label}</a>)}
+          <Button asChild className="mt-4 w-full"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get the app <ExternalLink /></a></Button>
+        </nav>
+      )}
+    </header>
+  );
+}
+
+function HomePage() {
+  return (
+    <div id="top" className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <section className="relative overflow-hidden bg-hero text-hero-foreground">
+          <div className="mx-auto grid min-h-[690px] max-w-7xl items-center gap-10 px-5 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-20">
+            <div className="relative z-10 max-w-xl">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-hero-foreground/20 bg-hero-foreground/10 px-3 py-1.5 text-sm font-semibold"><Star className="size-4 fill-current" /> 4.8 rating · 50M+ downloads</div>
+              <h1 className="text-5xl font-black leading-[1.02] sm:text-6xl lg:text-7xl">PDF Scanner<br />Document Scanner</h1>
+              <p className="mt-6 max-w-lg text-lg leading-8 text-hero-muted">Turn your Android phone into a fast document scanner. Capture receipts, notes, IDs, books, and photos, then save them as clear PDF or JPG files.</p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button asChild size="lg" className="bg-hero-foreground px-7 text-hero hover:bg-hero-foreground/90"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get it on Google Play <ExternalLink /></a></Button>
+                <Button asChild size="lg" variant="outline" className="border-hero-foreground/30 bg-transparent text-hero-foreground hover:bg-hero-foreground/10 hover:text-hero-foreground"><a href="#features">Explore features <ArrowRight /></a></Button>
+              </div>
+              <p className="mt-5 text-sm text-hero-muted">Free to install · Android 7.0 and up · In-app purchases</p>
+            </div>
+            <img src="/src/assets/scan-anything.webp" alt="PDF Scanner capturing a receipt and converting it to PDF" width={1000} height={768} fetchPriority="high" className="relative z-0 w-full max-w-[680px] justify-self-center drop-shadow-2xl" />
+          </div>
+        </section>
+
+        <section aria-label="Product facts" className="border-b border-border bg-background">
+          <div className="mx-auto grid max-w-7xl grid-cols-2 px-5 py-8 lg:grid-cols-4 lg:px-8">
+            {productFacts.map((fact, index) => <div key={fact.label} className={`px-4 py-3 text-center ${index % 2 ? "border-l border-border" : ""} ${index > 1 ? "border-t border-border lg:border-t-0" : ""} lg:border-l lg:first:border-l-0`}><strong className="block text-2xl font-extrabold">{fact.value}</strong><span className="mt-1 block text-xs font-semibold uppercase text-muted-foreground">{fact.label}</span></div>)}
+          </div>
+        </section>
+
+        <section id="features" className="scroll-mt-20 py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="max-w-3xl"><p className="eyebrow">Built for everyday documents</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">From paper to a ready-to-share PDF</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">Use the camera or existing images, clean up each page, extract text when needed, and keep the finished files organized on your phone.</p></div>
+            <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              <FeatureCard icon={Camera} title="Smart document scanning" text="Fast auto edge detection helps frame documents, receipts, notes, IDs, books, and photos." />
+              <FeatureCard icon={Images} title="Image to PDF" text="Choose images from your phone and combine them into a single multi-page PDF file." />
+              <FeatureCard icon={FileSearch} title="OCR text scanner" text="Extract text from scanned images so you can copy it instead of typing it manually." />
+              <FeatureCard icon={ScanLine} title="HD enhancement" text="Apply color, grayscale, or black-and-white filters to make scanned pages clearer." />
+              <FeatureCard icon={ShieldCheck} title="Organized documents" text="Keep PDFs and important documents together in the app for quick access." />
+              <FeatureCard icon={ArrowRight} title="Fast export and sharing" text="Save scans as PDF or JPG and share the finished document from your phone." />
+            </div>
+          </div>
+        </section>
+
+        <section id="how-it-works" className="scroll-mt-20 bg-soft py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="text-center"><p className="eyebrow">See the real app</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">The tools you use, step by step</h2></div>
+            <ProductRow image="/src/assets/digitize-id.webp" alt="PDF Scanner live ID card detection screen" kicker="Capture" title="Digitize an ID card or passport" text="Live detection helps place an ID inside the capture area before saving it in a digital format." bullets={["Dedicated ID Card and Passport modes", "Camera-guided capture", "Save important documents digitally"]} />
+            <ProductRow image="/src/assets/filter-and-enhance.webp" alt="PDF Scanner document enhancement filters" kicker="Enhance" title="Choose the clearest result" text="Review the scan and apply the filter that makes the page easiest to read before saving." bullets={["Original, Magic, Magic 2, and B&W filters", "Rotate before saving", "HD document enhancement"]} reverse />
+            <ProductRow image="/src/assets/image-to-pdf.webp" alt="PDF Scanner selecting six images to convert into a PDF" kicker="Convert" title="Turn multiple images into one PDF" text="Select several images from your phone, order them, and export them together as a multi-page PDF." bullets={["Batch image selection", "Multi-page PDF creation", "Fast PDF export"]} />
+            <ProductRow image="/src/assets/extract-text.webp" alt="PDF Scanner extracting selectable text with OCR" kicker="Extract" title="Copy text with OCR" text="Scan a page and turn the words in the image into selectable text that can be copied, translated, or shared." bullets={["Extract text from images and PDFs", "Copy selected text", "Translate or share extracted text"]} reverse />          </div>
+        </section>
+
+        <section className="py-20 sm:py-28">
+          <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
+            <img src="/src/assets/share-easily.webp" alt="PDF Scanner sharing a converted PDF through phone apps" width={1000} height={768} loading="lazy" className="w-full" />            <div><p className="eyebrow">Ready when you are</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">Save it. Share it. Keep moving.</h2><p className="mt-6 text-lg leading-8 text-muted-foreground">Once a document is converted, share it through the apps available on your phone. PDF Scanner keeps the workflow straightforward from capture to delivery.</p><ul className="mt-7 space-y-4">{["Save documents as PDF or JPG", "Share scanned documents instantly", "Organize important files in one place"].map((item) => <li key={item} className="flex items-center gap-3 font-semibold"><span className="grid size-6 place-items-center rounded-full bg-accent text-primary"><Check className="size-4" /></span>{item}</li>)}</ul></div>
+          </div>
+        </section>
+
+        <section className="bg-ink py-20 text-ink-foreground sm:py-24">
+          <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:px-8"><div><p className="eyebrow text-brand-light">PDF toolbox</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">More than a camera scanner</h2><p className="mt-6 text-lg leading-8 text-ink-muted">The app includes image-to-PDF and OCR tools alongside document controls for merging, splitting, locking, and unlocking PDF files.</p></div><img src="/src/assets/pdf-toolbox.webp" alt="PDF Scanner toolbox with image to PDF, OCR, merge, split, lock, and unlock tools" width={1000} height={768} loading="lazy" className="w-full" /></div>
+        </section>
+
+        <section id="reviews" className="scroll-mt-20 py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8"><div className="max-w-3xl"><p className="eyebrow">Google Play reviews</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">Why people keep using PDF Scanner</h2><p className="mt-5 text-muted-foreground">Selected public reviews from the PDF Scanner - Document Scanner Google Play listing.</p></div><div className="mt-12 grid gap-5 lg:grid-cols-3">{reviews.map((review) => <article key={review.name} className="rounded-lg border border-border bg-card p-7"><div className="flex gap-1 text-rating" aria-label="5 out of 5 stars">{Array.from({ length: 5 }).map((_, index) => <Star key={index} className="size-4 fill-current" />)}</div><blockquote className="mt-6 text-base leading-7">“{review.quote}”</blockquote><footer className="mt-7 border-t border-border pt-5"><strong className="block">{review.name}</strong><span className="mt-1 block text-sm text-muted-foreground">{review.date}</span><span className="mt-2 block text-xs text-muted-foreground">{review.helpful}</span></footer></article>)}</div></div>
+        </section>
+
+        <section id="details" className="scroll-mt-20 bg-soft py-20 sm:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:px-8"><div><p className="eyebrow">App details</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">Current release information</h2><p className="mt-5 leading-7 text-muted-foreground">These details reflect the product information supplied from the Google Play listing.</p></div><dl className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">{appDetails.map((detail) => <div key={detail.label} className="bg-background p-5"><dt className="text-xs font-bold uppercase text-muted-foreground">{detail.label}</dt><dd className="mt-2 font-semibold">{detail.value}</dd></div>)}</dl></div>
+        </section>
+
+        <section id="download" className="bg-primary py-20 text-primary-foreground sm:py-24"><div className="mx-auto max-w-4xl px-5 text-center"><p className="text-sm font-bold uppercase">Version 6.3.0</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">Carry a document scanner in your pocket</h2><p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-primary-foreground/80">Download PDF Scanner - Document Scanner on Google Play and scan documents to PDF wherever you are.</p><Button asChild size="lg" className="mt-8 bg-primary-foreground px-7 text-primary hover:bg-primary-foreground/90"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">View on Google Play <ExternalLink /></a></Button></div></section>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+function FeatureCard({ icon: Icon, title, text }: { icon: typeof Camera; title: string; text: string }) {
+  return <article className="rounded-lg border border-border bg-card p-7 transition-transform duration-300 hover:-translate-y-1"><span className="grid size-11 place-items-center rounded-md bg-accent text-primary"><Icon className="size-5" /></span><h3 className="mt-6 text-xl font-extrabold">{title}</h3><p className="mt-3 leading-7 text-muted-foreground">{text}</p></article>;
+}
+
+function ProductRow({ image, alt, kicker, title, text, bullets, reverse = false }: { image: string; alt: string; kicker: string; title: string; text: string; bullets: string[]; reverse?: boolean }) {
+  return <article className={`mt-20 grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${reverse ? "lg:[&>*:first-child]:order-2" : ""}`}><img src={image} alt={alt} width={1000} height={768} loading="lazy" className="w-full rounded-lg border border-border bg-background" /><div><p className="eyebrow">{kicker}</p><h3 className="mt-4 text-3xl font-black sm:text-4xl">{title}</h3><p className="mt-5 text-lg leading-8 text-muted-foreground">{text}</p><ul className="mt-6 space-y-3">{bullets.map((bullet) => <li key={bullet} className="flex items-center gap-3 font-semibold"><Check className="size-5 text-primary" />{bullet}</li>)}</ul></div></article>;
+}
+
+function Footer() {
+  return <footer className="bg-footer text-footer-foreground"><div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr] lg:px-8"><div><Brand inverse /><p className="mt-5 max-w-sm text-sm leading-6 text-footer-muted">PDF Scanner - Document Scanner is an Android productivity app offered by Tools & Utilities Apps.</p></div><div><h3 className="text-sm font-bold">Product</h3><ul className="mt-5 space-y-3 text-sm text-footer-muted"><li><a href="#features" className="hover:text-footer-foreground">Features</a></li><li><a href="#reviews" className="hover:text-footer-foreground">Reviews</a></li><li><a href="#details" className="hover:text-footer-foreground">App details</a></li><li><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer" className="hover:text-footer-foreground">Google Play</a></li></ul></div><div><h3 className="text-sm font-bold">Developer</h3><ul className="mt-5 space-y-3 text-sm text-footer-muted"><li><a href={COMPANY_URL} target="_blank" rel="noreferrer" className="hover:text-footer-foreground">Tools & Utilities Apps</a></li><li><a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-footer-foreground">Support email</a></li><li>Darwin Technology L.L.C</li></ul></div></div><div className="border-t border-footer-border"><div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-6 text-xs text-footer-muted sm:flex-row sm:justify-between lg:px-8"><p>© 2026 Tools & Utilities Apps · Darwin Technology L.L.C</p><p>PDF Scanner for Android</p></div></div></footer>;
+}
