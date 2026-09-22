@@ -10,6 +10,7 @@ import {
 import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import pdfLogo from "@/assets/pdf-logo.webp";
 
 function NotFoundComponent() {
   return (
@@ -88,7 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap",
       },
-      { rel: "icon", href: "/src/assets/pdf-logo.webp", type: "image/webp" },
+      { rel: "icon", href: pdfLogo, type: "image/webp" }
     ],
   }),
   shellComponent: RootShell,
