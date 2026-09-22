@@ -147,3 +147,14 @@ Deploy the production build using the hosting provider of your choice.
 - Developer: [Tools & Utilities Apps](https://toolsutilitiesapps.com/)
 - Company: Darwin Technology L.L.C
 - Support: [support@toolsutilitiesapps.com](mailto:support@toolsutilitiesapps.com)
+
+<br>
+<p align="center">
+  <a href="https://github.com/SalmanDeveloperz">
+    <img src="https://img.shields.io/badge/Made%20With%20❤️%20By-Muhammad%20Salman-blue" />
+  </a>
+  <br>
+  <a href="https://github.com/SalmanDeveloperz">
+    <img src="https://img.shields.io/badge/Hello%20From-Lahore%20🇵🇰-green" />
+  </a>
+</p>
