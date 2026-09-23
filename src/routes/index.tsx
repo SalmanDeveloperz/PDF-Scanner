@@ -268,7 +268,10 @@ function AnimatedHeroTitle() {
         {text[0]}
         {!reducedMotion && activeLine === 0 && <span className="typewriter-caret" />}
       </span>
-      <span className={`typewriter-line typewriter-line-secondary ${activeLine === 1 ? "typewriter-line-active" : ""}`} aria-hidden="true">
+      <span
+        className={`typewriter-line typewriter-line-secondary ${activeLine === 1 ? "typewriter-line-active" : ""} text-4xl sm:text-5xl lg:text-6xl`}
+        aria-hidden="true"
+      >
         {text[1]}
         {!reducedMotion && activeLine === 1 && <span className="typewriter-caret" />}
       </span>
