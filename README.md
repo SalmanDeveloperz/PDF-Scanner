@@ -43,7 +43,7 @@ bun install
 bun run dev
 ```
 
-The local application is served by Vite. In Lovable's development environment it is available at `http://localhost:8080`.
+The local application is served by Vite at `http://localhost:5173` by default.
 
 ## Scripts
 
@@ -139,7 +139,7 @@ Before release:
 
 ## Deployment
 
-The project can be published directly from Lovable. The first publish creates the production URL. Any later metadata or content update must be published again before it appears on the live site.
+Deploy the production build using the hosting provider of your choice.
 
 ## Ownership and support
 

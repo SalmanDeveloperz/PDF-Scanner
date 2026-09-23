@@ -69,7 +69,7 @@ export const Route = createFileRoute("/")({
 function Brand({ inverse = false }: { inverse?: boolean }) {
   return (
     <a href="#top" className="flex shrink-0 items-center gap-2.5" aria-label="PDF Scanner home">
-      <span className="grid size-9 place-items-center rounded-md bg-primary text-primary-foreground"><ScanLine className="size-5" /></span>
+      <img src="/src/assets/pdf-logo.webp" alt="PDF Scanner" className="size-9 shrink-0 object-contain" />
       <span className={`text-base font-extrabold ${inverse ? "text-footer-foreground" : "text-foreground"}`}>PDF Scanner</span>
     </a>
   );
