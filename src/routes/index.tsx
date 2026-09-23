@@ -14,6 +14,15 @@ import {
   X,
 } from "lucide-react";
 
+import pdfLogo from "@/assets/pdf-logo.webp";
+import scanAnythingImage from "@/assets/scan-anything.webp";
+import digitizeIdImage from "@/assets/digitize-id.webp";
+import filterAndEnhanceImage from "@/assets/filter-and-enhance.webp";
+import imageToPdfImage from "@/assets/image-to-pdf.webp";
+import extractTextImage from "@/assets/extract-text.webp";
+import shareEasilyImage from "@/assets/share-easily.webp";
+import pdfToolboxImage from "@/assets/pdf-toolbox.webp";
+
 import scanAnything from "@/assets/product/scan-anything.png.asset.json";
 import idPassport from "@/assets/product/id-passport.png.asset.json";
 import hdFilters from "@/assets/product/hd-filters.png.asset.json";
