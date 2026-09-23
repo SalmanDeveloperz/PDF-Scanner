@@ -145,9 +145,7 @@ function Header() {
           <a href="#how-it-works" className="nav-link">How it works</a>
           <a href="#reviews" className="nav-link">Reviews</a>
         </nav>
-        <a href="#reviews" className="header-rating hidden lg:inline-flex" aria-label="4.8 Google Play rating"><Star className="size-3.5 fill-current" /> 4.8</a>
         <div className="header-actions ml-6 hidden lg:flex">
-
           <Button asChild className="header-cta"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get the app <ArrowUpRight /></a></Button>
           {/* <span className="header-download-proof"><Download className="size-3.4" /> 50 M+</span> */}
         </div>
