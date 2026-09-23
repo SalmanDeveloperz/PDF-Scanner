@@ -78,7 +78,7 @@ export const Route = createFileRoute("/")({
 function Brand({ inverse = false }: { inverse?: boolean }) {
   return (
     <a href="#top" className="flex shrink-0 items-center gap-2.5" aria-label="PDF Scanner home">
-      <img src="/src/assets/pdf-logo.webp" alt="PDF Scanner" className="size-9 shrink-0 object-contain" />
+      <img src={pdfLogo} alt="PDF Scanner" className="size-9 shrink-0 object-contain" />
       <span className={`text-base font-extrabold ${inverse ? "text-footer-foreground" : "text-foreground"}`}>PDF Scanner</span>
     </a>
   );
@@ -131,7 +131,7 @@ function HomePage() {
               </div>
               <p className="mt-5 text-sm text-hero-muted">Free to install · Android 7.0 and up · In-app purchases</p>
             </div>
-            <img src="/src/assets/scan-anything.webp" alt="PDF Scanner capturing a receipt and converting it to PDF" width={1000} height={768} fetchPriority="high" className="relative z-0 w-full max-w-[680px] justify-self-center drop-shadow-2xl" />
+            <img src={scanAnythingImage} alt="PDF Scanner capturing a receipt and converting it to PDF" width={1000} height={768} fetchPriority="high" className="relative z-0 w-full max-w-[680px] justify-self-center drop-shadow-2xl" />
           </div>
         </section>
 
@@ -158,20 +158,20 @@ function HomePage() {
         <section id="how-it-works" className="scroll-mt-20 bg-soft py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="text-center"><p className="eyebrow">See the real app</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">The tools you use, step by step</h2></div>
-            <ProductRow image="/src/assets/digitize-id.webp" alt="PDF Scanner live ID card detection screen" kicker="Capture" title="Digitize an ID card or passport" text="Live detection helps place an ID inside the capture area before saving it in a digital format." bullets={["Dedicated ID Card and Passport modes", "Camera-guided capture", "Save important documents digitally"]} />
-            <ProductRow image="/src/assets/filter-and-enhance.webp" alt="PDF Scanner document enhancement filters" kicker="Enhance" title="Choose the clearest result" text="Review the scan and apply the filter that makes the page easiest to read before saving." bullets={["Original, Magic, Magic 2, and B&W filters", "Rotate before saving", "HD document enhancement"]} reverse />
-            <ProductRow image="/src/assets/image-to-pdf.webp" alt="PDF Scanner selecting six images to convert into a PDF" kicker="Convert" title="Turn multiple images into one PDF" text="Select several images from your phone, order them, and export them together as a multi-page PDF." bullets={["Batch image selection", "Multi-page PDF creation", "Fast PDF export"]} />
-            <ProductRow image="/src/assets/extract-text.webp" alt="PDF Scanner extracting selectable text with OCR" kicker="Extract" title="Copy text with OCR" text="Scan a page and turn the words in the image into selectable text that can be copied, translated, or shared." bullets={["Extract text from images and PDFs", "Copy selected text", "Translate or share extracted text"]} reverse />          </div>
+            <ProductRow image={digitizeIdImage} alt="PDF Scanner live ID card detection screen" kicker="Capture" title="Digitize an ID card or passport" text="Live detection helps place an ID inside the capture area before saving it in a digital format." bullets={["Dedicated ID Card and Passport modes", "Camera-guided capture", "Save important documents digitally"]} />
+            <ProductRow image={filterAndEnhanceImage} alt="PDF Scanner document enhancement filters" kicker="Enhance" title="Choose the clearest result" text="Review the scan and apply the filter that makes the page easiest to read before saving." bullets={["Original, Magic, Magic 2, and B&W filters", "Rotate before saving", "HD document enhancement"]} reverse />
+            <ProductRow image={imageToPdfImage} alt="PDF Scanner selecting six images to convert into a PDF" kicker="Convert" title="Turn multiple images into one PDF" text="Select several images from your phone, order them, and export them together as a multi-page PDF." bullets={["Batch image selection", "Multi-page PDF creation", "Fast PDF export"]} />
+            <ProductRow image={extractTextImage} alt="PDF Scanner extracting selectable text with OCR" kicker="Extract" title="Copy text with OCR" text="Scan a page and turn the words in the image into selectable text that can be copied, translated, or shared." bullets={["Extract text from images and PDFs", "Copy selected text", "Translate or share extracted text"]} reverse />          </div>
         </section>
 
         <section className="py-20 sm:py-28">
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
-            <img src="/src/assets/share-easily.webp" alt="PDF Scanner sharing a converted PDF through phone apps" width={1000} height={768} loading="lazy" className="w-full" />            <div><p className="eyebrow">Ready when you are</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">Save it. Share it. Keep moving.</h2><p className="mt-6 text-lg leading-8 text-muted-foreground">Once a document is converted, share it through the apps available on your phone. PDF Scanner keeps the workflow straightforward from capture to delivery.</p><ul className="mt-7 space-y-4">{["Save documents as PDF or JPG", "Share scanned documents instantly", "Organize important files in one place"].map((item) => <li key={item} className="flex items-center gap-3 font-semibold"><span className="grid size-6 place-items-center rounded-full bg-accent text-primary"><Check className="size-4" /></span>{item}</li>)}</ul></div>
+            <img src={shareEasilyImage} alt="PDF Scanner sharing a converted PDF through phone apps" width={1000} height={768} loading="lazy" className="w-full" />            <div><p className="eyebrow">Ready when you are</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">Save it. Share it. Keep moving.</h2><p className="mt-6 text-lg leading-8 text-muted-foreground">Once a document is converted, share it through the apps available on your phone. PDF Scanner keeps the workflow straightforward from capture to delivery.</p><ul className="mt-7 space-y-4">{["Save documents as PDF or JPG", "Share scanned documents instantly", "Organize important files in one place"].map((item) => <li key={item} className="flex items-center gap-3 font-semibold"><span className="grid size-6 place-items-center rounded-full bg-accent text-primary"><Check className="size-4" /></span>{item}</li>)}</ul></div>
           </div>
         </section>
 
         <section className="bg-ink py-20 text-ink-foreground sm:py-24">
-          <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:px-8"><div><p className="eyebrow text-brand-light">PDF toolbox</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">More than a camera scanner</h2><p className="mt-6 text-lg leading-8 text-ink-muted">The app includes image-to-PDF and OCR tools alongside document controls for merging, splitting, locking, and unlocking PDF files.</p></div><img src="/src/assets/pdf-toolbox.webp" alt="PDF Scanner toolbox with image to PDF, OCR, merge, split, lock, and unlock tools" width={1000} height={768} loading="lazy" className="w-full" /></div>
+          <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:px-8"><div><p className="eyebrow text-brand-light">PDF toolbox</p><h2 className="mt-4 text-4xl font-black sm:text-5xl">More than a camera scanner</h2><p className="mt-6 text-lg leading-8 text-ink-muted">The app includes image-to-PDF and OCR tools alongside document controls for merging, splitting, locking, and unlocking PDF files.</p></div><img src={pdfToolboxImage} alt="PDF Scanner toolbox with image to PDF, OCR, merge, split, lock, and unlock tools" width={1000} height={768} loading="lazy" className="w-full" /></div>
         </section>
 
         <section id="reviews" className="scroll-mt-20 py-20 sm:py-28">
