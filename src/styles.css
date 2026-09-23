@@ -8,7 +8,6 @@
  * Design system definition.
  *
  * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
  *
  * The :root and .dark blocks define the actual color values using oklch.
  * All colors MUST use oklch format.
@@ -51,6 +50,7 @@
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
+  --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -70,25 +70,25 @@
   --card-foreground: oklch(0.2 0.025 255);
   --popover: oklch(0.998 0.002 250);
   --popover-foreground: oklch(0.2 0.025 255);
-  --primary: oklch(0.6 0.19 252);
-  --primary-foreground: oklch(1 0 0);
+  --primary: oklch(0.62 0.2 30);
+  --primary-foreground: oklch(0.2 0.025 255);
   --secondary: oklch(0.95 0.022 245);
   --secondary-foreground: oklch(0.28 0.09 255);
   --muted: oklch(0.955 0.008 250);
   --muted-foreground: oklch(0.49 0.018 250);
-  --accent: oklch(0.92 0.055 235);
-  --accent-foreground: oklch(0.32 0.15 252);
+  --accent: oklch(0.95 0.045 30);
+  --accent-foreground: oklch(0.48 0.16 30);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.89 0.014 250);
   --input: oklch(0.89 0.014 250);
-  --ring: oklch(37.172% 0.24454 265.513);
+  --ring: oklch(0.62 0.2 30);
   --hero: oklch(0.975 0.018 245);
   --hero-foreground: oklch(0.18 0.035 255);
   --hero-muted: oklch(0.43 0.025 250);
   --soft: oklch(0.955 0.018 245);
-  --ink: oklch(0.6 0.19 252);
-  --ink-foreground: oklch(0.98 0.004 245);
+  --ink: oklch(31.303% 0.10062 260.834);
+  --ink-foreground: oklch(0.62 0.2 30);
   --ink-muted: oklch(0.78 0.02 245);
   --rating: oklch(0.79 0.17 81);
   --footer: oklch(0.115 0.035 255);
@@ -96,7 +96,7 @@
   --footer-muted: oklch(0.7 0.015 245);
   --footer-border: oklch(1 0 0 / 12%);
   --brand-light: oklch(0.76 0.13 242);
-  --brand-red: oklch(0.58 0.2 28);
+  --brand-red: oklch(0.62 0.2 30);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -160,7 +160,7 @@
   }
 
   ::selection {
-    background: oklch(0.6 0.19 252 / 22%);
+    background: oklch(0.62 0.2 30 / 22%);
     color: var(--foreground);
   }
 
@@ -246,6 +246,56 @@
   animation: hero-copy-in 800ms cubic-bezier(0.2, 0.8, 0.2, 1) 120ms both;
 }
 
+.hero-title {
+  min-height: 7.65rem;
+}
+
+.typewriter-line {
+  align-items: baseline;
+  display: inline-flex;
+  min-width: 9.5ch;
+  opacity: 0.82;
+  text-align: left;
+  transform: translateY(0.08em);
+  transition: opacity 420ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.typewriter-complete {
+  min-width: auto;
+}
+
+.typewriter-line-secondary {
+  display: block;
+  min-height: 1.02em;
+  min-width: 16ch;
+}
+
+.typewriter-line-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.typewriter-caret {
+  animation: caret-blink 1200ms ease-in-out infinite;
+  background: var(--primary);
+  display: inline-block;
+  height: 0.86em;
+  margin-left: 0.12em;
+  transform: translateY(0.08em);
+  width: 0.08em;
+}
+
+@keyframes caret-blink {
+  42% {
+    opacity: 1;
+  }
+
+  58%,
+  100% {
+    opacity: 0;
+  }
+}
+
 .hero-visual {
   animation: hero-visual-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) 220ms both, visual-float 6s ease-in-out 1.2s infinite;
 }
@@ -302,13 +352,13 @@
 }
 
 .feature-card:hover {
-  border-color: oklch(0.58 0.2 255 / 38%);
+  border-color: oklch(0.62 0.2 30 / 38%);
   box-shadow: 0 18px 38px oklch(0.18 0.06 255 / 10%);
   transform: translateY(-0.35rem);
 }
 
 .cta-section {
-  background-image: linear-gradient(135deg, var(--primary), oklch(0.48 0.18 258));
+  background-image: linear-gradient(135deg, var(--primary), oklch(0.52 0.19 28));
   overflow: hidden;
   position: relative;
 }
@@ -331,6 +381,11 @@
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .typewriter-caret {
+    animation: none;
+    opacity: 0;
   }
 }
 
@@ -355,7 +410,60 @@
 }
 
 .header-cta {
-  box-shadow: 0 8px 20px oklch(0.58 0.2 255 / 20%);
+  box-shadow: 0 8px 20px oklch(0.62 0.2 30 / 22%);
+}
+
+.header-actions {
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.header-rating,
+.header-download-proof,
+.mobile-proof {
+  align-items: center;
+  color: var(--secondary-foreground);
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 800;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+
+.header-rating,
+.header-download-proof,
+.mobile-proof {
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.header-rating:hover {
+  color: var(--primary);
+}
+
+.header-rating svg,
+.header-download-proof svg,
+.mobile-proof svg {
+  color: var(--rating);
+}
+
+.header-download-proof svg {
+  color: var(--primary);
+}
+
+.fact-item {
+  position: relative;
+}
+
+.fact-icon {
+  align-items: center;
+  background: var(--accent);
+  border-radius: 999px;
+  color: var(--primary);
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  margin-bottom: 0.55rem;
+  width: 2rem;
 }
 
 .hero-section {
@@ -379,7 +487,7 @@
 
 .hero-badge {
   background: oklch(1 0 0 / 68%);
-  border: 1px solid oklch(0.58 0.2 255 / 18%);
+  border: 1px solid oklch(0.62 0.2 30 / 22%);
   box-shadow: 0 5px 18px oklch(0.3 0.04 255 / 7%);
   color: var(--secondary-foreground);
 }
@@ -387,11 +495,11 @@
 .hero-primary-button {
   background: var(--primary);
   color: white;
-  box-shadow: 0 10px 22px oklch(0.58 0.2 255 / 22%);
+  box-shadow: 0 10px 22px oklch(0.62 0.2 30 / 24%);
 }
 
 .hero-primary-button:hover {
-  background: oklch(0.52 0.2 255);
+  background: oklch(0.56 0.2 30);
 }
 
 .hero-secondary-button {
@@ -409,36 +517,16 @@
   position: relative;
 }
 
-.hero-art-wrap::before {
-  background: oklch(1 0 0 / 62%);
-  border: 1px solid oklch(1 0 0 / 88%);
-  border-radius: 1.5rem;
-  box-shadow: 0 28px 55px oklch(0.3 0.04 255 / 12%);
-  content: "";
-  inset: 5% -2% 4% 3%;
-  position: absolute;
-  transform: rotate(2deg);
-}
-
-.hero-art-wrap::after {
-  background: oklch(0.6 0.19 252 / 12%);
-  border-radius: 50%;
-  content: "";
-  filter: blur(2px);
-  height: 15rem;
-  position: absolute;
-  right: 8%;
-  top: 12%;
-  width: 15rem;
-  z-index: -1;
-}
-
 .hero-art-wrap .hero-visual {
-  filter: drop-shadow(0 24px 30px oklch(0.22 0.04 255 / 14%));
+  filter: none;
+}
+
+.product-visual {
+  filter: none;
 }
 
 .facts-strip {
-  background-image: linear-gradient(90deg, transparent, oklch(0.6 0.19 252 / 4%), transparent);
+  background-image: linear-gradient(90deg, transparent, oklch(0.62 0.2 30 / 4%), transparent);
 }
 
 .bg-soft {
@@ -460,7 +548,7 @@
 }
 
 #reviews article:hover {
-  border-color: oklch(0.6 0.19 252 / 34%);
+  border-color: oklch(0.62 0.2 30 / 34%);
   box-shadow: 0 18px 35px oklch(0.2 0.025 255 / 10%);
   transform: translateY(-0.25rem);
 }
@@ -514,7 +602,7 @@
 }
 
 .mega-menu-glow {
-  background: radial-gradient(circle, oklch(0.62 0.19 250 / 12%), transparent 68%);
+  background: radial-gradient(circle, oklch(0.62 0.2 30 / 10%), transparent 68%);
   height: 9rem;
   pointer-events: none;
   position: absolute;
@@ -652,6 +740,11 @@
   font-size: 0.9rem;
   font-weight: 800;
   padding: 1rem 0.1rem;
+}
+
+.mobile-proof {
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0.1rem 0.75rem;
 }
 
 @media (max-width: 640px) {

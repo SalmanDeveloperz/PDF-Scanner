@@ -8,6 +8,7 @@ import {
   Check,
   ChevronDown,
   CreditCard,
+  Download,
   ExternalLink,
   FileImage,
   FileSearch,
@@ -16,6 +17,7 @@ import {
   LockKeyhole,
   Menu,
   PenLine,
+  BadgeCheck,
   ScanLine,
   ScanText,
   ShieldCheck,
@@ -143,8 +145,11 @@ function Header() {
           <a href="#how-it-works" className="nav-link">How it works</a>
           <a href="#reviews" className="nav-link">Reviews</a>
         </nav>
-        <div className="ml-6 hidden lg:block">
+        <a href="#reviews" className="header-rating hidden lg:inline-flex" aria-label="4.8 Google Play rating"><Star className="size-3.5 fill-current" /> 4.8</a>
+        <div className="header-actions ml-6 hidden lg:flex">
+
           <Button asChild className="header-cta"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get the app <ArrowUpRight /></a></Button>
+          {/* <span className="header-download-proof"><Download className="size-3.4" /> 50 M+</span> */}
         </div>
         <Button variant="ghost" size="icon" className="ml-auto lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label={mobileOpen ? "Close menu" : "Open menu"}>{mobileOpen ? <X /> : <Menu />}</Button>
       </div>
@@ -160,6 +165,7 @@ function Header() {
           ))}
           <a href="#features" onClick={() => setMobileOpen(false)} className="mobile-nav-link">Features</a>
           <a href="#how-it-works" onClick={() => setMobileOpen(false)} className="mobile-nav-link">How it works</a>
+          <div className="mobile-proof"><Download className="size-3.5" /> 50M+ downloads <span aria-hidden="true">·</span> <Star className="size-3.5 fill-current" /> 4.8 rating</div>
           <Button asChild className="mt-4 w-full"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get the app <ExternalLink /></a></Button>
         </nav>
       )}
@@ -182,6 +188,93 @@ function MegaMenu({ items }: { items: Array<{ icon: typeof Camera; title: string
       </div>
       <div className="mega-footer"><Sparkles className="size-4 text-primary" /><span>Designed for fast, effortless document work</span><a href="#features">Explore all <ArrowRight className="size-3.5" /></a></div>
     </div>
+  );
+}
+
+function AnimatedHeroTitle() {
+  const phrases = ["PDF Scanner", "Document Scanner"];
+  const [text, setText] = useState(["", phrases[1]]);
+  const [activeLine, setActiveLine] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(motionQuery.matches);
+    if (motionQuery.matches) {
+      setText(phrases);
+      setActiveLine(-1);
+      return;
+    }
+
+    let line = 0;
+    let character = 0;
+    let mode: "typing-top" | "erasing-bottom" | "typing-bottom" = "typing-top";
+    let timer: number;
+
+    const updateLine = (lineIndex: number, value: string) => {
+      setText((current) => current.map((item, index) => index === lineIndex ? value : item));
+    };
+
+    const tick = () => {
+      if (mode === "typing-top") {
+        const phrase = phrases[0];
+        character += 1;
+        updateLine(0, phrase.slice(0, character));
+        if (character === phrase.length) {
+          mode = "erasing-bottom";
+          line = 1;
+          character = phrases[1].length;
+          setActiveLine(1);
+          timer = window.setTimeout(tick, 1000);
+        } else {
+          timer = window.setTimeout(tick, 112);
+        }
+        return;
+      }
+
+      if (mode === "erasing-bottom") {
+        character -= 1;
+        updateLine(1, phrases[1].slice(0, character));
+        if (character > 0) {
+          timer = window.setTimeout(tick, 82);
+          return;
+        }
+        mode = "typing-bottom";
+        character = 0;
+        timer = window.setTimeout(tick, 450);
+        return;
+      }
+
+      character += 1;
+      updateLine(1, phrases[1].slice(0, character));
+      if (character < phrases[1].length) {
+        timer = window.setTimeout(tick, 112);
+        return;
+      }
+
+      setText(["", phrases[1]]);
+      setActiveLine(0);
+      line = 0;
+      character = 0;
+      mode = "typing-top";
+      timer = window.setTimeout(tick, 2200);
+    };
+
+    timer = window.setTimeout(tick, 450);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  return (
+    <h1 className="hero-title text-5xl font-black leading-[1.02] sm:text-6xl lg:text-7xl" aria-label="PDF Scanner Document Scanner">
+      <span className={`typewriter-line ${activeLine === 0 ? "typewriter-line-active" : ""}`} aria-hidden="true">
+        {text[0]}
+        {!reducedMotion && activeLine === 0 && <span className="typewriter-caret" />}
+      </span>
+      <span className={`typewriter-line typewriter-line-secondary ${activeLine === 1 ? "typewriter-line-active" : ""}`} aria-hidden="true">
+        {text[1]}
+        {!reducedMotion && activeLine === 1 && <span className="typewriter-caret" />}
+      </span>
+    </h1>
   );
 }
 
@@ -221,10 +314,9 @@ function HomePage() {
       <Header />
       <main>
         <section className="hero-section relative overflow-hidden bg-hero text-hero-foreground">
-          <div className="hero-grid mx-auto flex min-h-[690px] max-w-7xl flex-col items-center gap-12 px-5 py-16 lg:px-8 lg:py-20">
+          <div className="hero-grid mx-auto flex min-h-[690px] max-w-7xl flex-col items-center gap-8 px-5 py-12 lg:px-8 lg:py-16">
             <div className="hero-copy relative z-10 max-w-3xl text-center">
-              <div className="hero-badge mb-6 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold"><Star className="size-4 fill-current" /> 4.8 rating · 50M+ downloads</div>
-              <h1 className="text-5xl font-black leading-[1.02] sm:text-6xl lg:text-7xl">PDF Scanner<br />Document Scanner</h1>
+              <AnimatedHeroTitle />
               <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-hero-muted">Turn your Android phone into a fast document scanner. Capture receipts, notes, IDs, books, and photos, then save them as clear PDF or JPG files.</p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <Button asChild size="lg" className="hero-primary-button px-7"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get it on Google Play <ExternalLink /></a></Button>
@@ -238,7 +330,7 @@ function HomePage() {
 
         <section aria-label="Product facts" className="facts-strip border-b border-border bg-background" data-reveal>
           <div className="mx-auto grid max-w-7xl grid-cols-2 px-5 py-8 lg:grid-cols-4 lg:px-8">
-            {productFacts.map((fact, index) => <div key={fact.label} className={`px-4 py-3 text-center ${index % 2 ? "border-l border-border" : ""} ${index > 1 ? "border-t border-border lg:border-t-0" : ""} lg:border-l lg:first:border-l-0`}><strong className="block text-2xl font-extrabold">{fact.value}</strong><span className="mt-1 block text-xs font-semibold uppercase text-muted-foreground">{fact.label}</span></div>)}
+            {productFacts.map((fact, index) => { const FactIcon = [Download, Star, BadgeCheck, ScanLine][index]; return <div key={fact.label} className={`fact-item px-4 py-3 text-center ${index % 2 ? "border-l border-border" : ""} ${index > 1 ? "border-t border-border lg:border-t-0" : ""} lg:border-l lg:first:border-l-0`}><span className="fact-icon"><FactIcon className="size-4" /></span><strong className="block text-2xl font-extrabold">{fact.value}</strong><span className="mt-1 block text-xs font-semibold uppercase text-muted-foreground">{fact.label}</span></div>; })}
           </div>
         </section>
 
@@ -295,7 +387,7 @@ function FeatureCard({ icon: Icon, title, text }: { icon: typeof Camera; title: 
 }
 
 function ProductRow({ image, alt, kicker, title, text, bullets, reverse = false }: { image: string; alt: string; kicker: string; title: string; text: string; bullets: string[]; reverse?: boolean }) {
-  return <article className={`mt-20 grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${reverse ? "lg:[&>*:first-child]:order-2" : ""}`}><img src={image} alt={alt} width={1000} height={768} loading="lazy" className="w-full rounded-lg border border-border bg-background" /><div><p className="eyebrow">{kicker}</p><h3 className="mt-4 text-3xl font-black sm:text-4xl">{title}</h3><p className="mt-5 text-lg leading-8 text-muted-foreground">{text}</p><ul className="mt-6 space-y-3">{bullets.map((bullet) => <li key={bullet} className="flex items-center gap-3 font-semibold"><Check className="size-5 text-primary" />{bullet}</li>)}</ul></div></article>;
+  return <article className={`mt-20 grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${reverse ? "lg:[&>*:first-child]:order-2" : ""}`}><img src={image} alt={alt} width={1000} height={768} loading="lazy" className="product-visual w-full" /><div><p className="eyebrow">{kicker}</p><h3 className="mt-4 text-3xl font-black sm:text-4xl">{title}</h3><p className="mt-5 text-lg leading-8 text-muted-foreground">{text}</p><ul className="mt-6 space-y-3">{bullets.map((bullet) => <li key={bullet} className="flex items-center gap-3 font-semibold"><Check className="size-5 text-primary" />{bullet}</li>)}</ul></div></article>;
 }
 
 function Footer() {
