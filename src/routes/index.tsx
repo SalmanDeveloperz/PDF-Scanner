@@ -2,15 +2,27 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ArrowRight,
+  ArrowUpRight,
+  BookOpen,
   Camera,
   Check,
+  ChevronDown,
+  CreditCard,
   ExternalLink,
+  FileImage,
   FileSearch,
+  Files,
   Images,
+  LockKeyhole,
   Menu,
+  PenLine,
   ScanLine,
+  ScanText,
   ShieldCheck,
   Star,
+  Stamp,
+  Sparkles,
+  UnlockKeyhole,
   X,
 } from "lucide-react";
 
@@ -85,32 +97,91 @@ function Brand({ inverse = false }: { inverse?: boolean }) {
 }
 
 function Header() {
-  const [open, setOpen] = useState(false);
-  const links = [
-    ["Features", "#features"],
-    ["How it works", "#how-it-works"],
-    ["Reviews", "#reviews"],
-    ["App details", "#details"],
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const closeMenus = () => setOpenMenu(null);
+
+  const scanItems = [
+    { icon: Camera, title: "Scan Doc", text: "Turn paper into clear PDFs", href: "#features" },
+    { icon: CreditCard, title: "ID Card", text: "Capture both sides with ease", href: "#how-it-works" },
+    { icon: BookOpen, title: "Passport & Book", text: "Preserve pages without glare", href: "#how-it-works" },
+    { icon: Images, title: "ID Photo", text: "Make ready-to-use photo sheets", href: "#features" },
   ];
+  const pdfItems = [
+    { icon: Files, title: "Merge PDF", text: "Combine files in seconds", href: "#details" },
+    { icon: FileImage, title: "Image to PDF", text: "Create polished PDFs from photos", href: "#how-it-works" },
+    { icon: LockKeyhole, title: "Lock PDF", text: "Protect files with a password", href: "#details" },
+    { icon: UnlockKeyhole, title: "Unlock PDF", text: "Open protected documents", href: "#details" },
+    { icon: PenLine, title: "Sign", text: "Add your signature digitally", href: "#features" },
+    { icon: Stamp, title: "Watermark", text: "Brand and protect your work", href: "#features" },
+  ];
+  const navItems = [
+    { label: "Scan", items: scanItems },
+    { label: "PDF Tools", items: pdfItems },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center px-5 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl" onMouseLeave={closeMenus}>
+      <div className="mx-auto flex h-[78px] max-w-7xl items-center px-5 lg:px-8">
         <Brand />
-        <nav className="ml-auto hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
-          {links.map(([label, href]) => <a key={label} href={href} className="text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">{label}</a>)}
+        <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
+          {navItems.map((navItem) => (
+            <div key={navItem.label} className="relative">
+              <button
+                type="button"
+                aria-expanded={openMenu === navItem.label}
+                onClick={() => setOpenMenu(openMenu === navItem.label ? null : navItem.label)}
+                onMouseEnter={() => setOpenMenu(navItem.label)}
+                className={`nav-trigger ${openMenu === navItem.label ? "nav-trigger-active" : ""}`}
+              >
+                {navItem.label}<ChevronDown className={`size-3.5 transition-transform duration-300 ${openMenu === navItem.label ? "rotate-180" : ""}`} />
+              </button>
+              {openMenu === navItem.label && <MegaMenu items={navItem.items} />}
+            </div>
+          ))}
+          <a href="#features" className="nav-link">Features</a>
+          <a href="#how-it-works" className="nav-link">How it works</a>
+          <a href="#reviews" className="nav-link">Reviews</a>
         </nav>
-        <div className="ml-8 hidden lg:block">
-          <Button asChild><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get the app <ExternalLink /></a></Button>
+        <div className="ml-6 hidden lg:block">
+          <Button asChild className="header-cta"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get the app <ArrowUpRight /></a></Button>
         </div>
-        <Button variant="ghost" size="icon" className="ml-auto lg:hidden" onClick={() => setOpen((value) => !value)} aria-label={open ? "Close menu" : "Open menu"}>{open ? <X /> : <Menu />}</Button>
+        <Button variant="ghost" size="icon" className="ml-auto lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label={mobileOpen ? "Close menu" : "Open menu"}>{mobileOpen ? <X /> : <Menu />}</Button>
       </div>
-      {open && (
-        <nav className="border-t border-border bg-background px-5 py-4 lg:hidden" aria-label="Mobile navigation">
-          {links.map(([label, href]) => <a key={label} href={href} onClick={() => setOpen(false)} className="block border-b border-border py-3 text-sm font-semibold text-foreground">{label}</a>)}
+      {mobileOpen && (
+        <nav className="mobile-nav lg:hidden" aria-label="Mobile navigation">
+          {navItems.map((navItem) => (
+            <details key={navItem.label} className="mobile-nav-group">
+              <summary>{navItem.label}<ChevronDown className="size-4" /></summary>
+              <div className="mobile-nav-items">
+                {navItem.items.map((item) => <a key={item.title} href={item.href} onClick={() => setMobileOpen(false)}><item.icon className="size-4 text-primary" />{item.title}</a>)}
+              </div>
+            </details>
+          ))}
+          <a href="#features" onClick={() => setMobileOpen(false)} className="mobile-nav-link">Features</a>
+          <a href="#how-it-works" onClick={() => setMobileOpen(false)} className="mobile-nav-link">How it works</a>
           <Button asChild className="mt-4 w-full"><a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">Get the app <ExternalLink /></a></Button>
         </nav>
       )}
     </header>
+  );
+}
+
+function MegaMenu({ items }: { items: Array<{ icon: typeof Camera; title: string; text: string; href: string }> }) {
+  return (
+    <div className="mega-menu">
+      <div className="mega-menu-glow" />
+      <div className="relative grid gap-1 sm:grid-cols-2">
+        {items.map((item) => (
+          <a key={item.title} href={item.href} className="mega-item">
+            <span className="mega-item-icon"><item.icon className="size-4" /></span>
+            <span><strong>{item.title}</strong><small>{item.text}</small></span>
+            <ArrowUpRight className="mega-item-arrow" />
+          </a>
+        ))}
+      </div>
+      <div className="mega-footer"><Sparkles className="size-4 text-primary" /><span>Designed for fast, effortless document work</span><a href="#features">Explore all <ArrowRight className="size-3.5" /></a></div>
+    </div>
   );
 }
 
