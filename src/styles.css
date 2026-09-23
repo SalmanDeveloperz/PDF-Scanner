@@ -71,7 +71,7 @@
   --popover: oklch(0.998 0.002 250);
   --popover-foreground: oklch(0.2 0.025 255);
   --primary: oklch(0.62 0.2 30);
-  --primary-foreground: oklch(0.2 0.025 255);
+  --primary-foreground: oklch(0.99 0.004 30);
   --secondary: oklch(0.95 0.022 245);
   --secondary-foreground: oklch(0.28 0.09 255);
   --muted: oklch(0.955 0.008 250);
@@ -87,15 +87,15 @@
   --hero-foreground: oklch(0.18 0.035 255);
   --hero-muted: oklch(0.43 0.025 250);
   --soft: oklch(0.955 0.018 245);
-  --ink: oklch(31.303% 0.10062 260.834);
-  --ink-foreground: oklch(0.62 0.2 30);
-  --ink-muted: oklch(0.78 0.02 245);
+  --ink: oklch(0.22 0.06 25);
+  --ink-foreground: oklch(0.99 0.012 30);
+  --ink-muted: oklch(0.82 0.035 30);
   --rating: oklch(0.79 0.17 81);
-  --footer: oklch(0.115 0.035 255);
+  --footer: oklch(0.14 0.045 25);
   --footer-foreground: oklch(0.98 0.003 245);
   --footer-muted: oklch(0.7 0.015 245);
   --footer-border: oklch(1 0 0 / 12%);
-  --brand-light: oklch(0.76 0.13 242);
+  --brand-light: oklch(0.82 0.14 35);
   --brand-red: oklch(0.62 0.2 30);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -534,11 +534,11 @@
 }
 
 .bg-ink {
-  background-image: linear-gradient(135deg, var(--ink), oklch(0.12 0.05 260));
+  background: oklch(0.56 0.2 30);
 }
 
 .bg-footer {
-  background-image: linear-gradient(135deg, var(--footer), oklch(0.09 0.04 255));
+  background-image: linear-gradient(135deg, var(--footer), oklch(0.1 0.04 20));
 }
 
 #reviews article {
@@ -570,6 +570,50 @@
     margin: 0 auto;
     max-width: 46rem;
     width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: clamp(2.5rem, 11vw, 4rem);
+    min-height: 5.65rem;
+  }
+
+  .typewriter-line,
+  .typewriter-line-secondary {
+    min-width: 0;
+  }
+
+  .hero-copy {
+    width: 100%;
+  }
+
+  .hero-copy p {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .hero-grid {
+    gap: 2rem;
+    padding-bottom: 3.5rem;
+    padding-top: 3.5rem;
+  }
+
+  .hero-art-wrap {
+    max-width: 34rem;
+  }
+
+  .facts-strip .fact-item {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .facts-strip .fact-item strong {
+    font-size: 1.5rem;
+  }
+
+  .facts-strip .fact-item span:last-child {
+    font-size: 0.62rem;
   }
 }
 
