@@ -112,10 +112,10 @@ function Header() {
   const pdfItems = [
     { icon: Files, title: "Merge PDF", text: "Combine files in seconds", href: "/merge-pdf" },
     { icon: FileImage, title: "Image to PDF", text: "Create polished PDFs from photos", href: "/image-to-pdf" },
-    { icon: LockKeyhole, title: "Lock PDF", text: "Protect files with a password", href: "#details" },
-    { icon: UnlockKeyhole, title: "Unlock PDF", text: "Open protected documents", href: "#details" },
-    { icon: PenLine, title: "Sign", text: "Add your signature digitally", href: "#features" },
-    { icon: Stamp, title: "Watermark", text: "Brand and protect your work", href: "#features" },
+    { icon: LockKeyhole, title: "Lock PDF", text: "Protect files with a password", href: "/lock-pdf" },
+    { icon: UnlockKeyhole, title: "Unlock PDF", text: "Open protected documents", href: "/unlock-pdf" },
+    { icon: PenLine, title: "Sign", text: "Add a signature to your PDF", href: "/sign-pdf" },
+    { icon: Stamp, title: "Watermark", text: "Brand and protect your work", href: "/watermark-pdf" },
   ];
   const navItems = [
     { label: "Scan", items: scanItems },
