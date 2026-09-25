@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ImageToPdfRouteImport } from './routes/image-to-pdf'
+import { Route as LockPdfRouteImport } from './routes/lock-pdf'
 import { Route as MergePdfRouteImport } from './routes/merge-pdf'
+import { Route as UnlockPdfRouteImport } from './routes/unlock-pdf'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +25,64 @@ const ImageToPdfRoute = ImageToPdfRouteImport.update({
   path: '/image-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LockPdfRoute = LockPdfRouteImport.update({
+  id: '/lock-pdf',
+  path: '/lock-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MergePdfRoute = MergePdfRouteImport.update({
   id: '/merge-pdf',
   path: '/merge-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnlockPdfRoute = UnlockPdfRouteImport.update({
+  id: '/unlock-pdf',
+  path: '/unlock-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/image-to-pdf': typeof ImageToPdfRoute
+  '/lock-pdf': typeof LockPdfRoute
   '/merge-pdf': typeof MergePdfRoute
+  '/unlock-pdf': typeof UnlockPdfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/image-to-pdf': typeof ImageToPdfRoute
+  '/lock-pdf': typeof LockPdfRoute
   '/merge-pdf': typeof MergePdfRoute
+  '/unlock-pdf': typeof UnlockPdfRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/image-to-pdf': typeof ImageToPdfRoute
+  '/lock-pdf': typeof LockPdfRoute
   '/merge-pdf': typeof MergePdfRoute
+  '/unlock-pdf': typeof UnlockPdfRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/image-to-pdf' | '/merge-pdf'
+  fullPaths: '/' | '/image-to-pdf' | '/lock-pdf' | '/merge-pdf' | '/unlock-pdf'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/image-to-pdf' | '/merge-pdf'
-  id: '__root__' | '/' | '/image-to-pdf' | '/merge-pdf'
+  to: '/' | '/image-to-pdf' | '/lock-pdf' | '/merge-pdf' | '/unlock-pdf'
+  id:
+    | '__root__'
+    | '/'
+    | '/image-to-pdf'
+    | '/lock-pdf'
+    | '/merge-pdf'
+    | '/unlock-pdf'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ImageToPdfRoute: typeof ImageToPdfRoute
+  LockPdfRoute: typeof LockPdfRoute
   MergePdfRoute: typeof MergePdfRoute
+  UnlockPdfRoute: typeof UnlockPdfRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,11 +101,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImageToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lock-pdf': {
+      id: '/lock-pdf'
+      path: '/lock-pdf'
+      fullPath: '/lock-pdf'
+      preLoaderRoute: typeof LockPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/merge-pdf': {
       id: '/merge-pdf'
       path: '/merge-pdf'
       fullPath: '/merge-pdf'
       preLoaderRoute: typeof MergePdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unlock-pdf': {
+      id: '/unlock-pdf'
+      path: '/unlock-pdf'
+      fullPath: '/unlock-pdf'
+      preLoaderRoute: typeof UnlockPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,7 +128,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ImageToPdfRoute: ImageToPdfRoute,
+  LockPdfRoute: LockPdfRoute,
   MergePdfRoute: MergePdfRoute,
+  UnlockPdfRoute: UnlockPdfRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
