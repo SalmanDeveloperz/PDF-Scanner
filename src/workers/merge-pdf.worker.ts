@@ -4,9 +4,13 @@ type WorkerRequest = { files: File[] };
 type WorkerResponse =
   | { type: "progress"; completed: number; total: number; fileName: string }
   | { type: "success"; bytes: ArrayBuffer }
-  | { type: "error"; code: "encrypted" | "invalid" | "too-many-pages" | "failed" };
+  | {
+      type: "error";
+      code: "encrypted" | "invalid" | "too-many-pages" | "too-large-output" | "memory" | "failed";
+    };
 
 const MAX_OUTPUT_PAGES = 5_000;
+const MAX_OUTPUT_SIZE = 200 * 1024 * 1024;
 
 const workerScope = self as unknown as {
   onmessage: ((event: MessageEvent<WorkerRequest>) => void) | null;
@@ -40,20 +44,32 @@ workerScope.onmessage = async (event: MessageEvent<WorkerRequest>) => {
     }
 
     const bytes = await merged.save();
-    const output = bytes.buffer.slice(
-      bytes.byteOffset,
-      bytes.byteOffset + bytes.byteLength,
-    ) as ArrayBuffer;
+    if (bytes.byteLength > MAX_OUTPUT_SIZE) throw new Error("too-large-output");
+    const output =
+      bytes.byteOffset === 0 && bytes.byteLength === bytes.buffer.byteLength
+        ? (bytes.buffer as ArrayBuffer)
+        : (bytes.buffer.slice(
+            bytes.byteOffset,
+            bytes.byteOffset + bytes.byteLength,
+          ) as ArrayBuffer);
     workerScope.postMessage({ type: "success", bytes: output } satisfies WorkerResponse, [output]);
   } catch (error) {
+    const message = error instanceof Error ? error.message.toLowerCase() : "";
     const code =
       error instanceof EncryptedPDFError
         ? "encrypted"
-        : error instanceof Error && error.message === "empty-pdf"
+        : message === "empty-pdf"
           ? "invalid"
-          : error instanceof Error && error.message === "too-many-pages"
+          : message === "too-many-pages"
             ? "too-many-pages"
-            : "failed";
+            : message === "too-large-output"
+              ? "too-large-output"
+              : message.includes("out of memory") ||
+                  message.includes("array buffer allocation failed") ||
+                  message.includes("memory access out of bounds") ||
+                  message.includes("memory.grow")
+                ? "memory"
+                : "failed";
     workerScope.postMessage({ type: "error", code } satisfies WorkerResponse);
   }
 };

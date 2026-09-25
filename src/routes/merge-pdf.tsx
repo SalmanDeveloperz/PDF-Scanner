@@ -20,8 +20,8 @@ const MAX_FILES = 100;
 export const Route = createFileRoute("/merge-pdf")({ component: MergePdfPage });
 
 function formatBytes(bytes: number) {
-  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KiB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MiB`;
 }
 
 function MergePdfPage() {
@@ -44,16 +44,29 @@ function MergePdfPage() {
         (file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")),
     );
     const invalidCount = selected.length - valid.length;
-    if (files.length + valid.length > MAX_FILES) {
-      setError(`You can merge up to ${MAX_FILES} PDF files at a time.`);
+    const currentSize = files.reduce((total, item) => total + item.file.size, 0);
+    const selectedSize = valid.reduce((total, file) => total + file.size, 0);
+    const individuallyOversized = valid.filter((file) => file.size > MAX_TOTAL_SIZE);
+    if (individuallyOversized.length > 0) {
+      const oversized = individuallyOversized
+        .slice(0, 3)
+        .map((file) => `“${file.name}” (${formatBytes(file.size)})`)
+        .join(", ");
+      setError(
+        `${oversized}${individuallyOversized.length > 3 ? ", and others" : ""} exceed the 200 MiB maximum. Choose smaller PDFs.`,
+      );
       return;
     }
-    const nextSize =
-      files.reduce((total, item) => total + item.file.size, 0) +
-      valid.reduce((total, file) => total + file.size, 0);
+    if (files.length + valid.length > MAX_FILES) {
+      setError(
+        `This selection would exceed the ${MAX_FILES}-file limit. Remove files or choose fewer PDFs.`,
+      );
+      return;
+    }
+    const nextSize = currentSize + selectedSize;
     if (nextSize > MAX_TOTAL_SIZE) {
       setError(
-        `The combined file size is over ${formatBytes(MAX_TOTAL_SIZE)}. Remove some files and try again to avoid running out of browser memory.`,
+        `These files add ${formatBytes(selectedSize)} to the ${formatBytes(currentSize)} already selected, exceeding the 200 MiB total limit. Remove files or choose smaller PDFs.`,
       );
       return;
     }
@@ -134,7 +147,11 @@ function MergePdfPage() {
               ? "One of these files is empty or contains no readable pages. Check the files and try again."
               : message.code === "too-many-pages"
                 ? "This merge contains more than 5,000 pages, which is beyond the safe limit for browser processing. Split the files into smaller groups and try again."
-                : "We couldn't merge these PDFs. One may be damaged or use a PDF feature this browser tool can't process.",
+                : message.code === "too-large-output"
+                  ? "The merged PDF would exceed the 200 MiB output limit. Try fewer or smaller PDFs."
+                  : message.code === "memory"
+                    ? "Your device ran out of available memory while processing these PDFs. Try fewer or smaller files, or use a device with more memory."
+                    : "We couldn't merge these PDFs. One may be damaged or use a PDF feature this browser tool can't process.",
         );
         return;
       }
@@ -142,14 +159,22 @@ function MergePdfPage() {
         setError("The merge finished without a downloadable file. Please try again.");
         return;
       }
-      const url = URL.createObjectURL(new Blob([message.bytes], { type: "application/pdf" }));
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = "merged.pdf";
-      document.body.appendChild(anchor);
-      anchor.click();
-      anchor.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      let url: string | undefined;
+      try {
+        url = URL.createObjectURL(new Blob([message.bytes], { type: "application/pdf" }));
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = "merged.pdf";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url!), 60_000);
+      } catch {
+        if (url) URL.revokeObjectURL(url);
+        setError(
+          "The browser couldn’t prepare the merged PDF for download. Try fewer or smaller files.",
+        );
+      }
     };
     worker.onerror = (event) => {
       event.preventDefault();
@@ -157,8 +182,11 @@ function MergePdfPage() {
       workerRef.current = null;
       setIsMerging(false);
       setProgress("");
+      const reason = event.message.toLowerCase();
       setError(
-        "The browser stopped processing these files, likely because they are too large for available memory. Try smaller PDFs or use a device with more memory.",
+        reason.includes("memory") || reason.includes("allocation")
+          ? "Your device ran out of available memory while processing these PDFs. Try fewer or smaller files, or use a device with more memory."
+          : "The PDF processor stopped unexpectedly. The file may be damaged or use a feature this tool can’t process. Try another PDF.",
       );
     };
     worker.onmessageerror = () => {
@@ -364,8 +392,8 @@ function MergePdfPage() {
         </section>
         <p className="mt-5 text-center text-xs text-muted-foreground">
           For browser stability, merges support up to {MAX_FILES} PDFs,{" "}
-          {formatBytes(MAX_TOTAL_SIZE)}
-          total input, and 5,000 pages. Password-protected or damaged PDFs can’t be merged here.
+          {formatBytes(MAX_TOTAL_SIZE)} total input, and 5,000 pages. The output is also limited to{" "}
+          {formatBytes(MAX_TOTAL_SIZE)}. Password-protected or damaged PDFs can’t be merged here.
         </p>
         <p className="mt-2 text-center text-xs leading-5 text-muted-foreground">
           This tool combines page content. Interactive form fields and bookmarks may not carry over;
