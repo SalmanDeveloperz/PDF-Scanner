@@ -111,7 +111,7 @@ function Header() {
   ];
   const pdfItems = [
     { icon: Files, title: "Merge PDF", text: "Combine files in seconds", href: "/merge-pdf" },
-    { icon: FileImage, title: "Image to PDF", text: "Create polished PDFs from photos", href: "#how-it-works" },
+    { icon: FileImage, title: "Image to PDF", text: "Create polished PDFs from photos", href: "/image-to-pdf" },
     { icon: LockKeyhole, title: "Lock PDF", text: "Protect files with a password", href: "#details" },
     { icon: UnlockKeyhole, title: "Unlock PDF", text: "Open protected documents", href: "#details" },
     { icon: PenLine, title: "Sign", text: "Add your signature digitally", href: "#features" },

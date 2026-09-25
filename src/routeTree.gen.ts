@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ImageToPdfRouteImport } from './routes/image-to-pdf'
 import { Route as MergePdfRouteImport } from './routes/merge-pdf'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImageToPdfRoute = ImageToPdfRouteImport.update({
+  id: '/image-to-pdf',
+  path: '/image-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MergePdfRoute = MergePdfRouteImport.update({
@@ -25,27 +31,31 @@ const MergePdfRoute = MergePdfRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/image-to-pdf': typeof ImageToPdfRoute
   '/merge-pdf': typeof MergePdfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/image-to-pdf': typeof ImageToPdfRoute
   '/merge-pdf': typeof MergePdfRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/image-to-pdf': typeof ImageToPdfRoute
   '/merge-pdf': typeof MergePdfRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/merge-pdf'
+  fullPaths: '/' | '/image-to-pdf' | '/merge-pdf'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/merge-pdf'
-  id: '__root__' | '/' | '/merge-pdf'
+  to: '/' | '/image-to-pdf' | '/merge-pdf'
+  id: '__root__' | '/' | '/image-to-pdf' | '/merge-pdf'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ImageToPdfRoute: typeof ImageToPdfRoute
   MergePdfRoute: typeof MergePdfRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/image-to-pdf': {
+      id: '/image-to-pdf'
+      path: '/image-to-pdf'
+      fullPath: '/image-to-pdf'
+      preLoaderRoute: typeof ImageToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/merge-pdf': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ImageToPdfRoute: ImageToPdfRoute,
   MergePdfRoute: MergePdfRoute,
 }
 export const routeTree = rootRouteImport
