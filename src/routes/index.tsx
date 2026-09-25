@@ -60,10 +60,10 @@ const toolGroups = [
     icon: Files,
     tools: [
       { icon: Files, title: "Merge PDF", description: "Combine multiple files in the order you choose.", href: "/merge-pdf" },
-      { icon: Split, title: "Split PDF", description: "Separate selected pages into new documents." },
-      { icon: RotateCw, title: "Organize PDF", description: "Reorder, rotate, or remove pages." },
-      { icon: FilePlus, title: "Extract pages", description: "Save selected pages as a new PDF." },
-      { icon: FileMinus, title: "Remove pages", description: "Delete pages you no longer need." },
+      { icon: Split, title: "Split PDF", description: "Separate selected ranges into new documents.", href: "/split-pdf" },
+      { icon: RotateCw, title: "Organize PDF", description: "Reorder, rotate, or remove pages.", href: "/organize-pdf" },
+      { icon: FilePlus, title: "Extract pages", description: "Save selected pages as a new PDF.", href: "/extract-pages" },
+      { icon: FileMinus, title: "Remove pages", description: "Delete pages you no longer need.", href: "/remove-pages" },
     ],
   },
   {
@@ -189,11 +189,11 @@ function HomePage() {
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) {
-      setHeadline(rotatingHeadlines[0]);
+      setHeadline(rotatingHeadlines[0] ?? "");
       return;
     }
 
-    const phrase = rotatingHeadlines[phraseIndex];
+    const phrase = rotatingHeadlines[phraseIndex] ?? rotatingHeadlines[0] ?? "";
     const isComplete = headline === phrase;
     const isEmpty = headline.length === 0;
     const delay = isComplete ? 1750 : isEmpty && isErasing ? 250 : isErasing ? 38 : 78;
@@ -322,7 +322,7 @@ function HomePage() {
 
         <section aria-label="Product facts" className="facts-strip border-b border-border bg-background" data-reveal>
           <div className="mx-auto grid max-w-7xl grid-cols-2 px-5 py-6 lg:grid-cols-4 lg:px-8">
-            {productFacts.map((fact, index) => { const FactIcon = [Download, Star, BadgeCheck, ScanLine][index]; return <div key={fact.label} className={`fact-item px-4 py-3 text-center ${index % 2 ? "border-l border-border" : ""} ${index > 1 ? "border-t border-border lg:border-t-0" : ""} lg:border-l lg:first:border-l-0`}><span className="fact-icon"><FactIcon className="size-4" /></span><strong className="block text-2xl font-extrabold">{fact.value}</strong><span className="mt-1 block text-xs font-semibold uppercase text-muted-foreground">{fact.label}</span></div>; })}
+            {productFacts.map((fact, index) => { const FactIcon = [Download, Star, BadgeCheck, ScanLine][index]!; return <div key={fact.label} className={`fact-item px-4 py-3 text-center ${index % 2 ? "border-l border-border" : ""} ${index > 1 ? "border-t border-border lg:border-t-0" : ""} lg:border-l lg:first:border-l-0`}><span className="fact-icon"><FactIcon className="size-4" /></span><strong className="block text-2xl font-extrabold">{fact.value}</strong><span className="mt-1 block text-xs font-semibold uppercase text-muted-foreground">{fact.label}</span></div>; })}
           </div>
         </section>
 
