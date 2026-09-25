@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } f
 import { ArrowLeft, Eraser, FileText, LoaderCircle, PenLine, Stamp, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { PDF_EDIT_LIMITS, type PdfEditMode, type PdfEditResponse } from "@/lib/pdf-editing";
 
 type Position = "left" | "center" | "right";
@@ -415,292 +416,296 @@ export function PdfMarkTool({ mode }: { mode: PdfEditMode }) {
   };
 
   return (
-    <main className="min-h-screen bg-soft px-4 py-10 sm:px-6 sm:py-16">
-      <div className="mx-auto max-w-4xl">
-        <a
-          href="/"
-          className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition hover:text-foreground"
-        >
-          <ArrowLeft className="size-4" /> Back to PDF Scanner
-        </a>
-        <header className="mt-10 text-center sm:mt-14">
-          <span className="mx-auto grid size-14 place-items-center rounded-xl bg-accent text-primary">
-            {isSign ? <PenLine className="size-7" /> : <Stamp className="size-7" />}
-          </span>
-          <p className="eyebrow mt-5">PDF Tools</p>
-          <h1 className="mt-2 text-4xl font-black sm:text-5xl">
-            {isSign ? "Sign PDF" : "Watermark PDF"}
-          </h1>
-          <p className="mx-auto mt-4 max-w-xl leading-7 text-muted-foreground">
-            {isSign
-              ? "Draw a natural-looking signature and place it on the pages you choose."
-              : "Add a clear, customizable text watermark to protect or label your document."}
-          </p>
-        </header>
-
-        <section
-          className="mt-9 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-7"
-          aria-label={isSign ? "Sign PDF" : "Watermark PDF"}
-        >
-          <input
-            ref={inputRef}
-            className="sr-only"
-            type="file"
-            accept="application/pdf,.pdf"
-            disabled={isProcessing}
-            onChange={(event) => {
-              selectFile(event.target.files?.[0]);
-              event.target.value = "";
-            }}
-          />
-          <button
-            type="button"
-            disabled={isProcessing}
-            onClick={() => inputRef.current?.click()}
-            onDragOver={(event) => {
-              event.preventDefault();
-              setDragging(true);
-            }}
-            onDragLeave={() => setDragging(false)}
-            onDrop={(event) => {
-              event.preventDefault();
-              setDragging(false);
-              selectFile(event.dataTransfer.files[0]);
-            }}
-            className={`flex w-full flex-col items-center rounded-lg border-2 border-dashed px-5 py-9 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${dragging ? "border-primary bg-accent/50" : "border-border hover:border-primary/60 hover:bg-soft/70"}`}
+    <>
+      <SiteHeader />
+      <main className="min-h-[calc(100vh-18rem)] bg-soft px-4 py-8 sm:px-6 sm:py-12">
+        <div className="mx-auto max-w-4xl">
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition hover:text-foreground"
           >
-            <span className="grid size-12 place-items-center rounded-full bg-accent text-primary">
-              <FileText className="size-6" />
+            <ArrowLeft className="size-4" /> Back to PDF Scanner
+          </a>
+          <header className="mt-10 text-center sm:mt-14">
+            <span className="mx-auto grid size-14 place-items-center rounded-xl bg-accent text-primary">
+              {isSign ? <PenLine className="size-7" /> : <Stamp className="size-7" />}
             </span>
-            <strong className="mt-4 text-base">
-              {file ? "Choose a different PDF" : "Choose a PDF or drop it here"}
-            </strong>
-            <span className="mt-1 text-sm text-muted-foreground">
-              One PDF · up to {formatBytes(PDF_EDIT_LIMITS.inputBytes)}
-            </span>
-          </button>
+            <p className="eyebrow mt-5">PDF Tools</p>
+            <h1 className="mt-2 text-4xl font-black sm:text-5xl">
+              {isSign ? "Sign PDF" : "Watermark PDF"}
+            </h1>
+            <p className="mx-auto mt-4 max-w-xl leading-7 text-muted-foreground">
+              {isSign
+                ? "Draw a natural-looking signature and place it on the pages you choose."
+                : "Add a clear, customizable text watermark to protect or label your document."}
+            </p>
+          </header>
 
-          {file && (
-            <div className="mt-4 flex items-center gap-3 rounded-lg border border-border bg-background p-3">
-              <FileText className="size-5 shrink-0 text-primary" />
-              <span className="min-w-0 flex-1">
-                <strong className="block truncate text-sm">{file.name}</strong>
-                <small className="text-muted-foreground">{formatBytes(file.size)}</small>
+          <section
+            className="mt-9 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-7"
+            aria-label={isSign ? "Sign PDF" : "Watermark PDF"}
+          >
+            <input
+              ref={inputRef}
+              className="sr-only"
+              type="file"
+              accept="application/pdf,.pdf"
+              disabled={isProcessing}
+              onChange={(event) => {
+                selectFile(event.target.files?.[0]);
+                event.target.value = "";
+              }}
+            />
+            <button
+              type="button"
+              disabled={isProcessing}
+              onClick={() => inputRef.current?.click()}
+              onDragOver={(event) => {
+                event.preventDefault();
+                setDragging(true);
+              }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={(event) => {
+                event.preventDefault();
+                setDragging(false);
+                selectFile(event.dataTransfer.files[0]);
+              }}
+              className={`flex w-full flex-col items-center rounded-lg border-2 border-dashed px-5 py-9 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${dragging ? "border-primary bg-accent/50" : "border-border hover:border-primary/60 hover:bg-soft/70"}`}
+            >
+              <span className="grid size-12 place-items-center rounded-full bg-accent text-primary">
+                <FileText className="size-6" />
               </span>
-              <button
-                type="button"
-                disabled={isProcessing}
-                onClick={() => {
-                  setFile(null);
-                  setError("");
-                  setStatus("");
-                }}
-                className="text-sm font-semibold text-muted-foreground hover:text-destructive disabled:opacity-50"
-              >
-                Remove
-              </button>
-            </div>
-          )}
+              <strong className="mt-4 text-base">
+                {file ? "Choose a different PDF" : "Choose a PDF or drop it here"}
+              </strong>
+              <span className="mt-1 text-sm text-muted-foreground">
+                One PDF · up to {formatBytes(PDF_EDIT_LIMITS.inputBytes)}
+              </span>
+            </button>
 
-          {isSign ? (
-            <div className="mt-5">
-              <div className="mb-2 flex items-center justify-between gap-3">
-                <h2 className="text-sm font-bold">Draw your signature</h2>
+            {file && (
+              <div className="mt-4 flex items-center gap-3 rounded-lg border border-border bg-background p-3">
+                <FileText className="size-5 shrink-0 text-primary" />
+                <span className="min-w-0 flex-1">
+                  <strong className="block truncate text-sm">{file.name}</strong>
+                  <small className="text-muted-foreground">{formatBytes(file.size)}</small>
+                </span>
                 <button
                   type="button"
                   disabled={isProcessing}
-                  onClick={clearSignature}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground disabled:opacity-50"
+                  onClick={() => {
+                    setFile(null);
+                    setError("");
+                    setStatus("");
+                  }}
+                  className="text-sm font-semibold text-muted-foreground hover:text-destructive disabled:opacity-50"
                 >
-                  <Eraser className="size-3.5" /> Clear
+                  Remove
                 </button>
               </div>
-              <canvas
-                ref={canvasRef}
-                width={1200}
-                height={320}
-                aria-label="Draw signature here"
-                className="h-40 w-full touch-none rounded-lg border border-border bg-white sm:h-48"
-                onPointerDown={startStroke}
-                onPointerMove={continueStroke}
-                onPointerUp={endStroke}
-                onPointerCancel={endStroke}
-              />
-              <p className="mt-2 text-xs text-muted-foreground">
-                Use a mouse, stylus, or finger. Your signature is added as visible ink, not a
-                certificate-backed digital signature.
-              </p>
-            </div>
-          ) : (
-            <div className="mt-5 grid gap-4 sm:grid-cols-[1fr_auto]">
-              <label className="grid gap-2 text-sm font-bold">
-                Watermark text
-                <Input
-                  value={watermarkText}
-                  maxLength={100}
-                  disabled={isProcessing}
-                  onChange={(event) => setWatermarkText(event.target.value)}
-                  placeholder="e.g. CONFIDENTIAL"
-                />
-              </label>
-              <label className="grid gap-2 text-sm font-bold">
-                Color
-                <span className="flex h-9 items-center gap-3 rounded-md border border-input bg-background px-3">
-                  <input
-                    aria-label="Watermark color"
-                    type="color"
-                    value={watermarkColor}
-                    disabled={isProcessing}
-                    onChange={(event) => setWatermarkColor(event.target.value)}
-                    className="size-7 cursor-pointer border-0 bg-transparent p-0"
-                  />
-                  <span className="font-mono text-xs font-normal">
-                    {watermarkColor.toUpperCase()}
-                  </span>
-                </span>
-              </label>
-              <label className="grid gap-2 text-sm font-bold">
-                Opacity · {opacity}%
-                <input
-                  type="range"
-                  min={5}
-                  max={80}
-                  step={1}
-                  value={opacity}
-                  disabled={isProcessing}
-                  onChange={(event) => setOpacity(Number(event.target.value))}
-                />
-              </label>
-              <label className="grid gap-2 text-sm font-bold">
-                Angle · {rotation}°
-                <input
-                  type="range"
-                  min={-60}
-                  max={60}
-                  step={5}
-                  value={rotation}
-                  disabled={isProcessing}
-                  onChange={(event) => setRotation(Number(event.target.value))}
-                />
-              </label>
-            </div>
-          )}
+            )}
 
-          <div className="mt-5 grid gap-4 sm:grid-cols-2">
-            <label className="grid gap-2 text-sm font-bold">
-              {isSign ? "Signature placement" : "Watermark position"}
-              <select
-                value={position}
-                disabled={isProcessing}
-                onChange={(event) => setPosition(event.target.value as Position)}
-                className="h-11 rounded-md border border-input bg-background px-3 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            {isSign ? (
+              <div className="mt-5">
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <h2 className="text-sm font-bold">Draw your signature</h2>
+                  <button
+                    type="button"
+                    disabled={isProcessing}
+                    onClick={clearSignature}
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground disabled:opacity-50"
+                  >
+                    <Eraser className="size-3.5" /> Clear
+                  </button>
+                </div>
+                <canvas
+                  ref={canvasRef}
+                  width={1200}
+                  height={320}
+                  aria-label="Draw signature here"
+                  className="h-40 w-full touch-none rounded-lg border border-border bg-white sm:h-48"
+                  onPointerDown={startStroke}
+                  onPointerMove={continueStroke}
+                  onPointerUp={endStroke}
+                  onPointerCancel={endStroke}
+                />
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Use a mouse, stylus, or finger. Your signature is added as visible ink, not a
+                  certificate-backed digital signature.
+                </p>
+              </div>
+            ) : (
+              <div className="mt-5 grid gap-4 sm:grid-cols-[1fr_auto]">
+                <label className="grid gap-2 text-sm font-bold">
+                  Watermark text
+                  <Input
+                    value={watermarkText}
+                    maxLength={100}
+                    disabled={isProcessing}
+                    onChange={(event) => setWatermarkText(event.target.value)}
+                    placeholder="e.g. CONFIDENTIAL"
+                  />
+                </label>
+                <label className="grid gap-2 text-sm font-bold">
+                  Color
+                  <span className="flex h-9 items-center gap-3 rounded-md border border-input bg-background px-3">
+                    <input
+                      aria-label="Watermark color"
+                      type="color"
+                      value={watermarkColor}
+                      disabled={isProcessing}
+                      onChange={(event) => setWatermarkColor(event.target.value)}
+                      className="size-7 cursor-pointer border-0 bg-transparent p-0"
+                    />
+                    <span className="font-mono text-xs font-normal">
+                      {watermarkColor.toUpperCase()}
+                    </span>
+                  </span>
+                </label>
+                <label className="grid gap-2 text-sm font-bold">
+                  Opacity · {opacity}%
+                  <input
+                    type="range"
+                    min={5}
+                    max={80}
+                    step={1}
+                    value={opacity}
+                    disabled={isProcessing}
+                    onChange={(event) => setOpacity(Number(event.target.value))}
+                  />
+                </label>
+                <label className="grid gap-2 text-sm font-bold">
+                  Angle · {rotation}°
+                  <input
+                    type="range"
+                    min={-60}
+                    max={60}
+                    step={5}
+                    value={rotation}
+                    disabled={isProcessing}
+                    onChange={(event) => setRotation(Number(event.target.value))}
+                  />
+                </label>
+              </div>
+            )}
+
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <label className="grid gap-2 text-sm font-bold">
+                {isSign ? "Signature placement" : "Watermark position"}
+                <select
+                  value={position}
+                  disabled={isProcessing}
+                  onChange={(event) => setPosition(event.target.value as Position)}
+                  className="h-11 rounded-md border border-input bg-background px-3 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {isSign ? (
+                    <>
+                      <option value="left">Bottom left</option>
+                      <option value="center">Bottom center</option>
+                      <option value="right">Bottom right</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="left">Center left</option>
+                      <option value="center">Center</option>
+                      <option value="right">Center right</option>
+                    </>
+                  )}
+                </select>
+              </label>
+              <label className="grid gap-2 text-sm font-bold">
+                Apply to
+                <select
+                  value={allPages ? "all" : "range"}
+                  disabled={isProcessing}
+                  onChange={(event) => setAllPages(event.target.value === "all")}
+                  className="h-11 rounded-md border border-input bg-background px-3 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <option value="all">All pages</option>
+                  <option value="range">Page range</option>
+                </select>
+              </label>
+            </div>
+            {!allPages && (
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <label className="grid gap-2 text-sm font-bold">
+                  From page
+                  <Input
+                    type="number"
+                    min={1}
+                    step={1}
+                    value={startPage}
+                    disabled={isProcessing}
+                    onChange={(event) => setStartPage(event.target.value)}
+                  />
+                </label>
+                <label className="grid gap-2 text-sm font-bold">
+                  Through page
+                  <Input
+                    type="number"
+                    min={1}
+                    step={1}
+                    value={endPage}
+                    disabled={isProcessing}
+                    onChange={(event) => setEndPage(event.target.value)}
+                  />
+                </label>
+              </div>
+            )}
+
+            {error && (
+              <p
+                role="alert"
+                className="mt-4 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
               >
-                {isSign ? (
+                {error}
+              </p>
+            )}
+            {status && (
+              <p
+                role="status"
+                className="mt-4 break-words text-center text-sm font-medium text-muted-foreground"
+              >
+                {status}
+              </p>
+            )}
+            <div className="mt-6 flex gap-3">
+              <Button
+                type="button"
+                onClick={processPdf}
+                disabled={isProcessing || !file}
+                className="h-12 flex-1 text-base font-bold"
+              >
+                {isProcessing ? (
                   <>
-                    <option value="left">Bottom left</option>
-                    <option value="center">Bottom center</option>
-                    <option value="right">Bottom right</option>
+                    <LoaderCircle className="animate-spin" /> Processing PDF…
                   </>
                 ) : (
                   <>
-                    <option value="left">Center left</option>
-                    <option value="center">Center</option>
-                    <option value="right">Center right</option>
+                    <Download />{" "}
+                    {isSign ? "Apply signature and download" : "Add watermark and download"}
                   </>
                 )}
-              </select>
-            </label>
-            <label className="grid gap-2 text-sm font-bold">
-              Apply to
-              <select
-                value={allPages ? "all" : "range"}
-                disabled={isProcessing}
-                onChange={(event) => setAllPages(event.target.value === "all")}
-                className="h-11 rounded-md border border-input bg-background px-3 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <option value="all">All pages</option>
-                <option value="range">Page range</option>
-              </select>
-            </label>
-          </div>
-          {!allPages && (
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <label className="grid gap-2 text-sm font-bold">
-                From page
-                <Input
-                  type="number"
-                  min={1}
-                  step={1}
-                  value={startPage}
-                  disabled={isProcessing}
-                  onChange={(event) => setStartPage(event.target.value)}
-                />
-              </label>
-              <label className="grid gap-2 text-sm font-bold">
-                Through page
-                <Input
-                  type="number"
-                  min={1}
-                  step={1}
-                  value={endPage}
-                  disabled={isProcessing}
-                  onChange={(event) => setEndPage(event.target.value)}
-                />
-              </label>
-            </div>
-          )}
-
-          {error && (
-            <p
-              role="alert"
-              className="mt-4 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
-            >
-              {error}
-            </p>
-          )}
-          {status && (
-            <p
-              role="status"
-              className="mt-4 break-words text-center text-sm font-medium text-muted-foreground"
-            >
-              {status}
-            </p>
-          )}
-          <div className="mt-6 flex gap-3">
-            <Button
-              type="button"
-              onClick={processPdf}
-              disabled={isProcessing || !file}
-              className="h-12 flex-1 text-base font-bold"
-            >
-              {isProcessing ? (
-                <>
-                  <LoaderCircle className="animate-spin" /> Processing PDF…
-                </>
-              ) : (
-                <>
-                  <Download />{" "}
-                  {isSign ? "Apply signature and download" : "Add watermark and download"}
-                </>
-              )}
-            </Button>
-            {isProcessing && (
-              <Button type="button" variant="outline" onClick={cancel} className="h-12">
-                Cancel
               </Button>
-            )}
-          </div>
-          <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
-            Your PDF and mark are processed locally in this browser. Editing a PDF may invalidate
-            existing digital signatures.
+              {isProcessing && (
+                <Button type="button" variant="outline" onClick={cancel} className="h-12">
+                  Cancel
+                </Button>
+              )}
+            </div>
+            <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
+              Your PDF and mark are processed locally in this browser. Editing a PDF may invalidate
+              existing digital signatures.
+            </p>
+          </section>
+          <p className="mt-5 text-center text-xs leading-5 text-muted-foreground">
+            Maximum input and output size: {formatBytes(PDF_EDIT_LIMITS.inputBytes)} · up to{" "}
+            {PDF_EDIT_LIMITS.pages.toLocaleString()} pages. Large PDFs need extra memory on your
+            device.
           </p>
-        </section>
-        <p className="mt-5 text-center text-xs leading-5 text-muted-foreground">
-          Maximum input and output size: {formatBytes(PDF_EDIT_LIMITS.inputBytes)} · up to{" "}
-          {PDF_EDIT_LIMITS.pages.toLocaleString()} pages. Large PDFs need extra memory on your
-          device.
-        </p>
-      </div>
-    </main>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
   );
 }

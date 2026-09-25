@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import {
   IMAGE_TO_PDF_LIMITS,
   type ImagePdfMargin,
@@ -283,222 +284,229 @@ function ImageToPdfPage() {
   const totalBytes = images.reduce((sum, image) => sum + image.file.size, 0);
 
   return (
-    <main className="min-h-screen bg-soft px-4 py-10 sm:px-6 sm:py-16">
-      <div className="mx-auto max-w-4xl">
-        <a
-          href="/"
-          className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition hover:text-foreground"
-        >
-          <ArrowLeft className="size-4" /> Back to PDF Scanner
-        </a>
-        <header className="mt-10 text-center sm:mt-14">
-          <span className="mx-auto grid size-14 place-items-center rounded-xl bg-accent text-primary">
-            <FileImage className="size-7" />
-          </span>
-          <p className="eyebrow mt-5">PDF Tools</p>
-          <h1 className="mt-2 text-4xl font-black sm:text-5xl">Image to PDF</h1>
-          <p className="mx-auto mt-4 max-w-xl leading-7 text-muted-foreground">
-            Turn photos into a clean, multi-page PDF. Arrange your images, choose a page size, and
-            download the result.
-          </p>
-        </header>
-
-        <section
-          className="mt-9 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-7"
-          aria-label="Convert images to PDF"
-        >
-          <input
-            ref={inputRef}
-            className="sr-only"
-            type="file"
-            accept="image/*,.heic,.heif,.tif,.tiff,.svg"
-            multiple
-            disabled={isCreating}
-            onChange={(event) => {
-              if (event.target.files) addFiles(event.target.files);
-              event.target.value = "";
-            }}
-          />
-          <button
-            type="button"
-            disabled={isCreating}
-            onClick={() => inputRef.current?.click()}
-            onDragOver={(event) => {
-              event.preventDefault();
-              setDragging(true);
-            }}
-            onDragLeave={() => setDragging(false)}
-            onDrop={(event) => {
-              event.preventDefault();
-              setDragging(false);
-              addFiles(event.dataTransfer.files);
-            }}
-            className={`flex w-full flex-col items-center rounded-lg border-2 border-dashed px-5 py-10 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${dragging ? "border-primary bg-accent/50" : "border-border hover:border-primary/60 hover:bg-soft/70"}`}
+    <>
+      <SiteHeader />
+      <main className="min-h-[calc(100vh-18rem)] bg-soft px-4 py-8 sm:px-6 sm:py-12">
+        <div className="mx-auto max-w-4xl">
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition hover:text-foreground"
           >
-            <span className="grid size-12 place-items-center rounded-full bg-accent text-primary">
-              <ImagePlus className="size-6" />
+            <ArrowLeft className="size-4" /> Back to PDF Scanner
+          </a>
+          <header className="mt-10 text-center sm:mt-14">
+            <span className="mx-auto grid size-14 place-items-center rounded-xl bg-accent text-primary">
+              <FileImage className="size-7" />
             </span>
-            <strong className="mt-4 text-base">Choose images or drop them here</strong>
-            <span className="mt-1 text-sm text-muted-foreground">
-              JPEG, PNG, WebP, GIF, BMP, AVIF, HEIC, TIFF, SVG, and other browser-supported image
-              types
-            </span>
-          </button>
-
-          {images.length > 0 && (
-            <div className="mt-6">
-              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                <h2 className="font-extrabold">
-                  Your images{" "}
-                  <span className="font-medium text-muted-foreground">
-                    ({images.length} · {formatBytes(totalBytes)})
-                  </span>
-                </h2>
-                <button
-                  type="button"
-                  disabled={isCreating}
-                  onClick={clearImages}
-                  className="text-sm font-semibold text-muted-foreground hover:text-destructive disabled:opacity-50"
-                >
-                  Clear all
-                </button>
-              </div>
-              <ol className="grid gap-3 sm:grid-cols-2">
-                {images.map(({ id, file, previewUrl }, index) => (
-                  <li
-                    key={id}
-                    className="flex min-w-0 items-center gap-3 rounded-lg border border-border bg-background p-3"
-                  >
-                    <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-md bg-soft">
-                      <img
-                        src={previewUrl}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        className="size-full object-contain"
-                      />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <strong className="block truncate text-sm">{file.name}</strong>
-                      <small className="text-muted-foreground">
-                        {formatBytes(file.size)} · Page {index + 1}
-                      </small>
-                    </span>
-                    <button
-                      type="button"
-                      title="Move up"
-                      aria-label={`Move ${file.name} up`}
-                      disabled={isCreating || index === 0}
-                      onClick={() => moveImage(index, -1)}
-                      className="rounded p-2 text-muted-foreground hover:bg-soft hover:text-foreground disabled:opacity-30"
-                    >
-                      <ArrowUp className="size-4" />
-                    </button>
-                    <button
-                      type="button"
-                      title="Move down"
-                      aria-label={`Move ${file.name} down`}
-                      disabled={isCreating || index === images.length - 1}
-                      onClick={() => moveImage(index, 1)}
-                      className="rounded p-2 text-muted-foreground hover:bg-soft hover:text-foreground disabled:opacity-30"
-                    >
-                      <ArrowDown className="size-4" />
-                    </button>
-                    <button
-                      type="button"
-                      title="Remove image"
-                      aria-label={`Remove ${file.name}`}
-                      disabled={isCreating}
-                      onClick={() => removeImage(id)}
-                      className="rounded p-2 text-muted-foreground hover:bg-destructive/10 hover:text-destructive disabled:opacity-30"
-                    >
-                      <Trash2 className="size-4" />
-                    </button>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
-
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <label className="grid gap-2 text-sm font-bold">
-              Page size
-              <select
-                value={paperSize}
-                disabled={isCreating}
-                onChange={(event) => setPaperSize(event.target.value as ImagePdfPaperSize)}
-                className="h-11 rounded-md border border-input bg-background px-3 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <option value="a4">A4 · auto orientation</option>
-                <option value="letter">US Letter · auto orientation</option>
-                <option value="fit">Fit to image · 150 DPI</option>
-              </select>
-            </label>
-            <label className="grid gap-2 text-sm font-bold">
-              Page margin
-              <select
-                value={margin}
-                disabled={isCreating || paperSize === "fit"}
-                onChange={(event) => setMargin(Number(event.target.value) as ImagePdfMargin)}
-                className="h-11 rounded-md border border-input bg-background px-3 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
-              >
-                <option value={0}>None</option>
-                <option value={24}>Small · ⅓ inch</option>
-                <option value={48}>Large · ⅔ inch</option>
-              </select>
-            </label>
-          </div>
-
-          {error && (
-            <p
-              role="alert"
-              className="mt-4 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
-            >
-              {error}
+            <p className="eyebrow mt-5">PDF Tools</p>
+            <h1 className="mt-2 text-4xl font-black sm:text-5xl">Image to PDF</h1>
+            <p className="mx-auto mt-4 max-w-xl leading-7 text-muted-foreground">
+              Turn photos into a clean, multi-page PDF. Arrange your images, choose a page size, and
+              download the result.
             </p>
-          )}
-          {status && (
-            <p role="status" className="mt-4 text-center text-sm font-medium text-muted-foreground">
-              {status}
-            </p>
-          )}
-          <div className="mt-6 flex gap-3">
-            <Button
+          </header>
+
+          <section
+            className="mt-9 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-7"
+            aria-label="Convert images to PDF"
+          >
+            <input
+              ref={inputRef}
+              className="sr-only"
+              type="file"
+              accept="image/*,.heic,.heif,.tif,.tiff,.svg"
+              multiple
+              disabled={isCreating}
+              onChange={(event) => {
+                if (event.target.files) addFiles(event.target.files);
+                event.target.value = "";
+              }}
+            />
+            <button
               type="button"
-              onClick={createPdf}
-              disabled={isCreating || images.length === 0}
-              className="h-12 flex-1 text-base font-bold"
+              disabled={isCreating}
+              onClick={() => inputRef.current?.click()}
+              onDragOver={(event) => {
+                event.preventDefault();
+                setDragging(true);
+              }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={(event) => {
+                event.preventDefault();
+                setDragging(false);
+                addFiles(event.dataTransfer.files);
+              }}
+              className={`flex w-full flex-col items-center rounded-lg border-2 border-dashed px-5 py-10 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${dragging ? "border-primary bg-accent/50" : "border-border hover:border-primary/60 hover:bg-soft/70"}`}
             >
-              {isCreating ? (
-                <>
-                  <LoaderCircle className="animate-spin" /> Creating PDF…
-                </>
-              ) : (
-                <>
-                  <Download /> Create and download PDF
-                </>
-              )}
-            </Button>
-            {isCreating && (
-              <Button type="button" variant="outline" onClick={cancel} className="h-12">
-                Cancel
-              </Button>
-            )}
-          </div>
-          <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
-            Your images are processed locally in this browser and aren’t uploaded to a server.
-          </p>
-        </section>
+              <span className="grid size-12 place-items-center rounded-full bg-accent text-primary">
+                <ImagePlus className="size-6" />
+              </span>
+              <strong className="mt-4 text-base">Choose images or drop them here</strong>
+              <span className="mt-1 text-sm text-muted-foreground">
+                JPEG, PNG, WebP, GIF, BMP, AVIF, HEIC, TIFF, SVG, and other browser-supported image
+                types
+              </span>
+            </button>
 
-        <p className="mt-5 text-center text-xs leading-5 text-muted-foreground">
-          Limits: {IMAGE_TO_PDF_LIMITS.files} images,{" "}
-          {formatBytes(IMAGE_TO_PDF_LIMITS.totalInputBytes)} total input and output,{" "}
-          {IMAGE_TO_PDF_LIMITS.imagePixels / 1_000_000} megapixels per image,{" "}
-          {IMAGE_TO_PDF_LIMITS.totalPixels / 1_000_000} megapixels overall, and{" "}
-          {IMAGE_TO_PDF_LIMITS.imageDimension.toLocaleString()} pixels per side. Images must be
-          decodable by your browser; animated images use their first frame.
-        </p>
-      </div>
-    </main>
+            {images.length > 0 && (
+              <div className="mt-6">
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                  <h2 className="font-extrabold">
+                    Your images{" "}
+                    <span className="font-medium text-muted-foreground">
+                      ({images.length} · {formatBytes(totalBytes)})
+                    </span>
+                  </h2>
+                  <button
+                    type="button"
+                    disabled={isCreating}
+                    onClick={clearImages}
+                    className="text-sm font-semibold text-muted-foreground hover:text-destructive disabled:opacity-50"
+                  >
+                    Clear all
+                  </button>
+                </div>
+                <ol className="grid gap-3 sm:grid-cols-2">
+                  {images.map(({ id, file, previewUrl }, index) => (
+                    <li
+                      key={id}
+                      className="flex min-w-0 items-center gap-3 rounded-lg border border-border bg-background p-3"
+                    >
+                      <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-md bg-soft">
+                        <img
+                          src={previewUrl}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          className="size-full object-contain"
+                        />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <strong className="block truncate text-sm">{file.name}</strong>
+                        <small className="text-muted-foreground">
+                          {formatBytes(file.size)} · Page {index + 1}
+                        </small>
+                      </span>
+                      <button
+                        type="button"
+                        title="Move up"
+                        aria-label={`Move ${file.name} up`}
+                        disabled={isCreating || index === 0}
+                        onClick={() => moveImage(index, -1)}
+                        className="rounded p-2 text-muted-foreground hover:bg-soft hover:text-foreground disabled:opacity-30"
+                      >
+                        <ArrowUp className="size-4" />
+                      </button>
+                      <button
+                        type="button"
+                        title="Move down"
+                        aria-label={`Move ${file.name} down`}
+                        disabled={isCreating || index === images.length - 1}
+                        onClick={() => moveImage(index, 1)}
+                        className="rounded p-2 text-muted-foreground hover:bg-soft hover:text-foreground disabled:opacity-30"
+                      >
+                        <ArrowDown className="size-4" />
+                      </button>
+                      <button
+                        type="button"
+                        title="Remove image"
+                        aria-label={`Remove ${file.name}`}
+                        disabled={isCreating}
+                        onClick={() => removeImage(id)}
+                        className="rounded p-2 text-muted-foreground hover:bg-destructive/10 hover:text-destructive disabled:opacity-30"
+                      >
+                        <Trash2 className="size-4" />
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <label className="grid gap-2 text-sm font-bold">
+                Page size
+                <select
+                  value={paperSize}
+                  disabled={isCreating}
+                  onChange={(event) => setPaperSize(event.target.value as ImagePdfPaperSize)}
+                  className="h-11 rounded-md border border-input bg-background px-3 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <option value="a4">A4 · auto orientation</option>
+                  <option value="letter">US Letter · auto orientation</option>
+                  <option value="fit">Fit to image · 150 DPI</option>
+                </select>
+              </label>
+              <label className="grid gap-2 text-sm font-bold">
+                Page margin
+                <select
+                  value={margin}
+                  disabled={isCreating || paperSize === "fit"}
+                  onChange={(event) => setMargin(Number(event.target.value) as ImagePdfMargin)}
+                  className="h-11 rounded-md border border-input bg-background px-3 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+                >
+                  <option value={0}>None</option>
+                  <option value={24}>Small · ⅓ inch</option>
+                  <option value={48}>Large · ⅔ inch</option>
+                </select>
+              </label>
+            </div>
+
+            {error && (
+              <p
+                role="alert"
+                className="mt-4 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
+              >
+                {error}
+              </p>
+            )}
+            {status && (
+              <p
+                role="status"
+                className="mt-4 text-center text-sm font-medium text-muted-foreground"
+              >
+                {status}
+              </p>
+            )}
+            <div className="mt-6 flex gap-3">
+              <Button
+                type="button"
+                onClick={createPdf}
+                disabled={isCreating || images.length === 0}
+                className="h-12 flex-1 text-base font-bold"
+              >
+                {isCreating ? (
+                  <>
+                    <LoaderCircle className="animate-spin" /> Creating PDF…
+                  </>
+                ) : (
+                  <>
+                    <Download /> Create and download PDF
+                  </>
+                )}
+              </Button>
+              {isCreating && (
+                <Button type="button" variant="outline" onClick={cancel} className="h-12">
+                  Cancel
+                </Button>
+              )}
+            </div>
+            <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
+              Your images are processed locally in this browser and aren’t uploaded to a server.
+            </p>
+          </section>
+
+          <p className="mt-5 text-center text-xs leading-5 text-muted-foreground">
+            Limits: {IMAGE_TO_PDF_LIMITS.files} images,{" "}
+            {formatBytes(IMAGE_TO_PDF_LIMITS.totalInputBytes)} total input and output,{" "}
+            {IMAGE_TO_PDF_LIMITS.imagePixels / 1_000_000} megapixels per image,{" "}
+            {IMAGE_TO_PDF_LIMITS.totalPixels / 1_000_000} megapixels overall, and{" "}
+            {IMAGE_TO_PDF_LIMITS.imageDimension.toLocaleString()} pixels per side. Images must be
+            decodable by your browser; animated images use their first frame.
+          </p>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
   );
 }

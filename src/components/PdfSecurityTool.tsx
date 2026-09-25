@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { PDF_SECURITY_LIMITS, type PdfSecurityMode } from "@/lib/pdf-security";
 
 type QpdfRunErrorLike = Error & {
@@ -238,186 +239,191 @@ export function PdfSecurityTool({ mode }: { mode: PdfSecurityMode }) {
   };
 
   return (
-    <main className="min-h-screen bg-soft px-4 py-10 sm:px-6 sm:py-16">
-      <div className="mx-auto max-w-3xl">
-        <a
-          href="/"
-          className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition hover:text-foreground"
-        >
-          <ArrowLeft className="size-4" /> Back to PDF Scanner
-        </a>
-        <header className="mt-10 text-center sm:mt-14">
-          <span className="mx-auto grid size-14 place-items-center rounded-xl bg-accent text-primary">
-            {isLock ? <LockKeyhole className="size-7" /> : <UnlockKeyhole className="size-7" />}
-          </span>
-          <p className="eyebrow mt-5">PDF Tools</p>
-          <h1 className="mt-2 text-4xl font-black sm:text-5xl">
-            {isLock ? "Lock PDF" : "Unlock PDF"}
-          </h1>
-          <p className="mx-auto mt-4 max-w-xl leading-7 text-muted-foreground">
-            {isLock
-              ? "Protect a PDF with a password using strong 256-bit AES encryption."
-              : "Remove password protection from a PDF when you know its current password."}
-          </p>
-        </header>
-
-        <section
-          className="mt-9 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-7"
-          aria-label={`${isLock ? "Lock" : "Unlock"} PDF`}
-        >
-          <input
-            ref={inputRef}
-            className="sr-only"
-            type="file"
-            accept="application/pdf,.pdf"
-            disabled={isProcessing}
-            onChange={(event) => {
-              selectFile(event.target.files?.[0]);
-              event.target.value = "";
-            }}
-          />
-          <button
-            type="button"
-            disabled={isProcessing}
-            onClick={() => inputRef.current?.click()}
-            onDragOver={(event) => {
-              event.preventDefault();
-              setDragging(true);
-            }}
-            onDragLeave={() => setDragging(false)}
-            onDrop={(event) => {
-              event.preventDefault();
-              setDragging(false);
-              selectFile(event.dataTransfer.files[0]);
-            }}
-            className={`flex w-full flex-col items-center rounded-lg border-2 border-dashed px-5 py-10 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${dragging ? "border-primary bg-accent/50" : "border-border hover:border-primary/60 hover:bg-soft/70"}`}
+    <>
+      <SiteHeader />
+      <main className="min-h-[calc(100vh-18rem)] bg-soft px-4 py-8 sm:px-6 sm:py-12">
+        <div className="mx-auto max-w-3xl">
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition hover:text-foreground"
           >
-            <span className="grid size-12 place-items-center rounded-full bg-accent text-primary">
-              <FileText className="size-6" />
+            <ArrowLeft className="size-4" /> Back to PDF Scanner
+          </a>
+          <header className="mt-10 text-center sm:mt-14">
+            <span className="mx-auto grid size-14 place-items-center rounded-xl bg-accent text-primary">
+              {isLock ? <LockKeyhole className="size-7" /> : <UnlockKeyhole className="size-7" />}
             </span>
-            <strong className="mt-4 text-base">
-              {file ? "Choose a different PDF" : "Choose a PDF or drop it here"}
-            </strong>
-            <span className="mt-1 text-sm text-muted-foreground">
-              One PDF · up to {formatBytes(PDF_SECURITY_LIMITS.inputBytes)}
-            </span>
-          </button>
+            <p className="eyebrow mt-5">PDF Tools</p>
+            <h1 className="mt-2 text-4xl font-black sm:text-5xl">
+              {isLock ? "Lock PDF" : "Unlock PDF"}
+            </h1>
+            <p className="mx-auto mt-4 max-w-xl leading-7 text-muted-foreground">
+              {isLock
+                ? "Protect a PDF with a password using strong 256-bit AES encryption."
+                : "Remove password protection from a PDF when you know its current password."}
+            </p>
+          </header>
 
-          {file && (
-            <div className="mt-5 flex items-center gap-3 rounded-lg border border-border bg-background p-3">
-              <FileText className="size-5 shrink-0 text-primary" />
-              <span className="min-w-0 flex-1">
-                <strong className="block truncate text-sm">{file.name}</strong>
-                <small className="text-muted-foreground">{formatBytes(file.size)}</small>
+          <section
+            className="mt-9 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-7"
+            aria-label={`${isLock ? "Lock" : "Unlock"} PDF`}
+          >
+            <input
+              ref={inputRef}
+              className="sr-only"
+              type="file"
+              accept="application/pdf,.pdf"
+              disabled={isProcessing}
+              onChange={(event) => {
+                selectFile(event.target.files?.[0]);
+                event.target.value = "";
+              }}
+            />
+            <button
+              type="button"
+              disabled={isProcessing}
+              onClick={() => inputRef.current?.click()}
+              onDragOver={(event) => {
+                event.preventDefault();
+                setDragging(true);
+              }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={(event) => {
+                event.preventDefault();
+                setDragging(false);
+                selectFile(event.dataTransfer.files[0]);
+              }}
+              className={`flex w-full flex-col items-center rounded-lg border-2 border-dashed px-5 py-10 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${dragging ? "border-primary bg-accent/50" : "border-border hover:border-primary/60 hover:bg-soft/70"}`}
+            >
+              <span className="grid size-12 place-items-center rounded-full bg-accent text-primary">
+                <FileText className="size-6" />
               </span>
-              <button
-                type="button"
-                disabled={isProcessing}
-                onClick={() => {
-                  setFile(null);
-                  setError("");
-                  setStatus("");
-                }}
-                className="text-sm font-semibold text-muted-foreground hover:text-destructive disabled:opacity-50"
-              >
-                Remove
-              </button>
-            </div>
-          )}
+              <strong className="mt-4 text-base">
+                {file ? "Choose a different PDF" : "Choose a PDF or drop it here"}
+              </strong>
+              <span className="mt-1 text-sm text-muted-foreground">
+                One PDF · up to {formatBytes(PDF_SECURITY_LIMITS.inputBytes)}
+              </span>
+            </button>
 
-          <div className="mt-5 grid gap-4">
-            <label className="grid gap-2 text-sm font-bold">
-              {isLock ? "New password" : "Current PDF password"}
-              <Input
-                type="password"
-                autoComplete={isLock ? "new-password" : "current-password"}
-                value={password}
-                disabled={isProcessing}
-                maxLength={PDF_SECURITY_LIMITS.passwordMaxCharacters}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder={isLock ? "At least 8 characters" : "Enter the PDF password"}
-              />
-            </label>
-            {isLock && (
+            {file && (
+              <div className="mt-5 flex items-center gap-3 rounded-lg border border-border bg-background p-3">
+                <FileText className="size-5 shrink-0 text-primary" />
+                <span className="min-w-0 flex-1">
+                  <strong className="block truncate text-sm">{file.name}</strong>
+                  <small className="text-muted-foreground">{formatBytes(file.size)}</small>
+                </span>
+                <button
+                  type="button"
+                  disabled={isProcessing}
+                  onClick={() => {
+                    setFile(null);
+                    setError("");
+                    setStatus("");
+                  }}
+                  className="text-sm font-semibold text-muted-foreground hover:text-destructive disabled:opacity-50"
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+
+            <div className="mt-5 grid gap-4">
               <label className="grid gap-2 text-sm font-bold">
-                Confirm password
+                {isLock ? "New password" : "Current PDF password"}
                 <Input
                   type="password"
-                  autoComplete="new-password"
-                  value={confirmation}
+                  autoComplete={isLock ? "new-password" : "current-password"}
+                  value={password}
                   disabled={isProcessing}
                   maxLength={PDF_SECURITY_LIMITS.passwordMaxCharacters}
-                  onChange={(event) => setConfirmation(event.target.value)}
-                  placeholder="Enter the password again"
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder={isLock ? "At least 8 characters" : "Enter the PDF password"}
                 />
               </label>
-            )}
-          </div>
-
-          {!isLock && (
-            <details className="mt-4 rounded-lg border border-border bg-background px-4 py-3 text-sm">
-              <summary className="cursor-pointer font-semibold text-primary">
-                Forgot your password?
-              </summary>
-              <p className="mt-3 leading-6 text-muted-foreground">
-                This tool can’t recover or bypass a forgotten PDF password. Check your password
-                manager or records, ask the document’s creator or administrator, or look for the
-                original unprotected PDF or a backup. If you have an authorized owner password,
-                you can enter it above.
-              </p>
-            </details>
-          )}
-
-          {error && (
-            <p
-              role="alert"
-              className="mt-4 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
-            >
-              {error}
-            </p>
-          )}
-          {status && (
-            <p
-              role="status"
-              className="mt-4 break-words text-center text-sm font-medium text-muted-foreground"
-            >
-              {status}
-            </p>
-          )}
-          <div className="mt-6 flex gap-3">
-            <Button
-              type="button"
-              onClick={processPdf}
-              disabled={isProcessing || !file}
-              className="h-12 flex-1 text-base font-bold"
-            >
-              {isProcessing ? (
-                <>
-                  <LoaderCircle className="animate-spin" /> Processing PDF…
-                </>
-              ) : (
-                <>
-                  <Download /> {isLock ? "Lock and download" : "Unlock and download"}
-                </>
+              {isLock && (
+                <label className="grid gap-2 text-sm font-bold">
+                  Confirm password
+                  <Input
+                    type="password"
+                    autoComplete="new-password"
+                    value={confirmation}
+                    disabled={isProcessing}
+                    maxLength={PDF_SECURITY_LIMITS.passwordMaxCharacters}
+                    onChange={(event) => setConfirmation(event.target.value)}
+                    placeholder="Enter the password again"
+                  />
+                </label>
               )}
-            </Button>
-            {isProcessing && (
-              <Button type="button" variant="outline" onClick={cancel} className="h-12">
-                Cancel
-              </Button>
+            </div>
+
+            {!isLock && (
+              <details className="mt-4 rounded-lg border border-border bg-background px-4 py-3 text-sm">
+                <summary className="cursor-pointer font-semibold text-primary">
+                  Forgot your password?
+                </summary>
+                <p className="mt-3 leading-6 text-muted-foreground">
+                  This tool can’t recover or bypass a forgotten PDF password. Check your password
+                  manager or records, ask the document’s creator or administrator, or look for the
+                  original unprotected PDF or a backup. If you have an authorized owner password,
+                  you can enter it above.
+                </p>
+              </details>
             )}
-          </div>
-          <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
-            Your PDF and password are processed locally in your browser and aren’t uploaded.
-            Password-protected PDFs restrict access in compatible readers; they are not DRM.
+
+            {error && (
+              <p
+                role="alert"
+                className="mt-4 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
+              >
+                {error}
+              </p>
+            )}
+            {status && (
+              <p
+                role="status"
+                className="mt-4 break-words text-center text-sm font-medium text-muted-foreground"
+              >
+                {status}
+              </p>
+            )}
+            <div className="mt-6 flex gap-3">
+              <Button
+                type="button"
+                onClick={processPdf}
+                disabled={isProcessing || !file}
+                className="h-12 flex-1 text-base font-bold"
+              >
+                {isProcessing ? (
+                  <>
+                    <LoaderCircle className="animate-spin" /> Processing PDF…
+                  </>
+                ) : (
+                  <>
+                    <Download /> {isLock ? "Lock and download" : "Unlock and download"}
+                  </>
+                )}
+              </Button>
+              {isProcessing && (
+                <Button type="button" variant="outline" onClick={cancel} className="h-12">
+                  Cancel
+                </Button>
+              )}
+            </div>
+            <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
+              Your PDF and password are processed locally in your browser and aren’t uploaded.
+              Password-protected PDFs restrict access in compatible readers; they are not DRM.
+            </p>
+          </section>
+          <p className="mt-5 text-center text-xs leading-5 text-muted-foreground">
+            Maximum input and output size: {formatBytes(PDF_SECURITY_LIMITS.inputBytes)}. Large PDFs
+            need extra memory on your device. Unlocking requires a password you’re authorized to
+            use.
           </p>
-        </section>
-        <p className="mt-5 text-center text-xs leading-5 text-muted-foreground">
-          Maximum input and output size: {formatBytes(PDF_SECURITY_LIMITS.inputBytes)}. Large PDFs
-          need extra memory on your device. Unlocking requires a password you’re authorized to use.
-        </p>
-      </div>
-    </main>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
   );
 }
 
