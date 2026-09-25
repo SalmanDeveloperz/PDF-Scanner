@@ -17,6 +17,8 @@ import {
   UnlockKeyhole,
   Minimize,
   Pencil,
+  RotateCw,
+  ScanText,
   ShieldCheck,
   type LucideIcon,
   X,
@@ -40,6 +42,8 @@ const scanItems = [
     href: "/#how-it-works",
   },
   { icon: Images, title: "Image to PDF", text: "Build a PDF from photos", href: "/image-to-pdf" },
+  { icon: RotateCw, title: "Smart page cleanup", text: "Coming soon · Scan and OCR", href: "/#scan-ocr" },
+  { icon: ScanText, title: "Recognize text", text: "Coming soon · Scan and OCR", href: "/#scan-ocr" },
 ];
 
 const pdfItems = [
@@ -59,6 +63,12 @@ const pdfItems = [
   },
   { icon: PenLine, title: "Sign PDF", text: "Add a drawn signature", href: "/sign-pdf" },
   { icon: Stamp, title: "Watermark PDF", text: "Label and brand pages", href: "/watermark-pdf" },
+  { icon: Files, title: "Split and organize", text: "Coming soon · Organize PDF", href: "/#organize-pdf" },
+  { icon: Minimize, title: "Compress and repair", text: "Coming soon · Optimize PDF", href: "/#optimize-pdf" },
+  { icon: FileImage, title: "Convert documents", text: "PDF, images, and office files", href: "/#convert-pdf" },
+  { icon: Pencil, title: "Edit PDF", text: "Coming soon · Edit and sign", href: "/#edit-pdf" },
+  { icon: ShieldCheck, title: "Redact PDF", text: "Coming soon · PDF security", href: "/#security-pdf" },
+  { icon: Camera, title: "Scan and recognize", text: "Coming soon · Scan and OCR", href: "/#scan-ocr" },
 ];
 
 const navItems = [
@@ -91,8 +101,8 @@ function Brand({ inverse = false }: { inverse?: boolean }) {
 
 function MegaMenu({ items }: { items: MenuItem[] }) {
   return (
-    <div className="mega-menu">
-      <div className="relative grid gap-1 sm:grid-cols-2">
+    <div className={`mega-menu ${items.length > 6 ? "mega-menu-wide" : ""}`}>
+      <div className="relative grid gap-1 sm:grid-cols-2 xl:grid-cols-3">
         {items.map(({ icon: Icon, title, text, href }) => (
           <a key={title} href={href} className="mega-item">
             <span className="mega-item-icon">

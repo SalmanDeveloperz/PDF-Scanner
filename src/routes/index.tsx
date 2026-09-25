@@ -21,6 +21,7 @@ import {
   FileInput,
   FilePlus,
   FileMinus,
+  FileText,
   Crop,
   Hash,
   ScanText,
@@ -74,6 +75,8 @@ const toolGroups = [
       { icon: Minimize, title: "Compress PDF", description: "Reduce file size while keeping pages readable." },
       { icon: Wrench, title: "Repair PDF", description: "Try to recover content from damaged documents." },
       { icon: ScanText, title: "OCR PDF", description: "Make scanned pages searchable and selectable." },
+      { icon: FilePlus, title: "Flatten PDF", description: "Make form fields and annotations part of the page." },
+      { icon: ShieldCheck, title: "PDF/A archive", description: "Prepare documents for reliable long-term storage." },
     ],
   },
   {
@@ -112,6 +115,7 @@ const toolGroups = [
       { icon: UnlockKeyhole, title: "Unlock PDF", description: "Remove protection when you know the password.", href: "/unlock-pdf" },
       { icon: ShieldCheck, title: "Redact PDF", description: "Permanently remove sensitive page content." },
       { icon: GitCompare, title: "Compare PDFs", description: "Review differences between two documents." },
+      { icon: FileMinus, title: "Clean PDF metadata", description: "Remove hidden author and device details before sharing." },
     ],
   },
   {
@@ -123,6 +127,9 @@ const toolGroups = [
       { icon: Camera, title: "Scan documents", description: "Capture receipts, notes, IDs, and paper pages." },
       { icon: ScanText, title: "Recognize text", description: "Extract words from a scan for copying and search." },
       { icon: Images, title: "Photo to searchable PDF", description: "Combine images and make their text searchable." },
+      { icon: RotateCw, title: "Smart page cleanup", description: "Straighten pages and reduce shadows before export." },
+      { icon: FileSearch, title: "Receipt data extractor", description: "Find merchant, date, and totals in receipt scans." },
+      { icon: FileText, title: "Batch rename scans", description: "Name documents from recognized titles and dates." },
     ],
   },
 ];
@@ -271,7 +278,7 @@ function HomePage() {
             <nav className="catalog-categories" aria-label="PDF tool categories">
               <a className="catalog-category-link catalog-category-active" href="#tools">All tools <span>{allTools.length}</span></a>
               {toolGroups.map(({ id, title, icon: Icon, tools }) => (
-                <a key={id} className="catalog-category-link" href={`#${id}`}><Icon aria-hidden="true" />{title}<span>{tools.length}</span></a>
+                <a key={id} className="catalog-category-link" href={`#${id}`} onClick={() => setToolSearch("")}><Icon aria-hidden="true" />{title}<span>{tools.length}</span></a>
               ))}
             </nav>
 
