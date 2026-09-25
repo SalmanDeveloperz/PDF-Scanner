@@ -10,12 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CompressPdfRouteImport } from './routes/compress-pdf'
 import { Route as ExtractPagesRouteImport } from './routes/extract-pages'
+import { Route as FlattenPdfRouteImport } from './routes/flatten-pdf'
 import { Route as ImageToPdfRouteImport } from './routes/image-to-pdf'
 import { Route as LockPdfRouteImport } from './routes/lock-pdf'
 import { Route as MergePdfRouteImport } from './routes/merge-pdf'
+import { Route as OcrPdfRouteImport } from './routes/ocr-pdf'
 import { Route as OrganizePdfRouteImport } from './routes/organize-pdf'
+import { Route as PdfaArchiveRouteImport } from './routes/pdfa-archive'
 import { Route as RemovePagesRouteImport } from './routes/remove-pages'
+import { Route as RepairPdfRouteImport } from './routes/repair-pdf'
 import { Route as SignPdfRouteImport } from './routes/sign-pdf'
 import { Route as SplitPdfRouteImport } from './routes/split-pdf'
 import { Route as UnlockPdfRouteImport } from './routes/unlock-pdf'
@@ -26,9 +31,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompressPdfRoute = CompressPdfRouteImport.update({
+  id: '/compress-pdf',
+  path: '/compress-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExtractPagesRoute = ExtractPagesRouteImport.update({
   id: '/extract-pages',
   path: '/extract-pages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlattenPdfRoute = FlattenPdfRouteImport.update({
+  id: '/flatten-pdf',
+  path: '/flatten-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImageToPdfRoute = ImageToPdfRouteImport.update({
@@ -46,14 +61,29 @@ const MergePdfRoute = MergePdfRouteImport.update({
   path: '/merge-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OcrPdfRoute = OcrPdfRouteImport.update({
+  id: '/ocr-pdf',
+  path: '/ocr-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrganizePdfRoute = OrganizePdfRouteImport.update({
   id: '/organize-pdf',
   path: '/organize-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PdfaArchiveRoute = PdfaArchiveRouteImport.update({
+  id: '/pdfa-archive',
+  path: '/pdfa-archive',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RemovePagesRoute = RemovePagesRouteImport.update({
   id: '/remove-pages',
   path: '/remove-pages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RepairPdfRoute = RepairPdfRouteImport.update({
+  id: '/repair-pdf',
+  path: '/repair-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignPdfRoute = SignPdfRouteImport.update({
@@ -79,12 +109,17 @@ const WatermarkPdfRoute = WatermarkPdfRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/compress-pdf': typeof CompressPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
+  '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
   '/lock-pdf': typeof LockPdfRoute
   '/merge-pdf': typeof MergePdfRoute
+  '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/pdfa-archive': typeof PdfaArchiveRoute
   '/remove-pages': typeof RemovePagesRoute
+  '/repair-pdf': typeof RepairPdfRoute
   '/sign-pdf': typeof SignPdfRoute
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
@@ -92,12 +127,17 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/compress-pdf': typeof CompressPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
+  '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
   '/lock-pdf': typeof LockPdfRoute
   '/merge-pdf': typeof MergePdfRoute
+  '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/pdfa-archive': typeof PdfaArchiveRoute
   '/remove-pages': typeof RemovePagesRoute
+  '/repair-pdf': typeof RepairPdfRoute
   '/sign-pdf': typeof SignPdfRoute
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
@@ -106,12 +146,17 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/compress-pdf': typeof CompressPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
+  '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
   '/lock-pdf': typeof LockPdfRoute
   '/merge-pdf': typeof MergePdfRoute
+  '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/pdfa-archive': typeof PdfaArchiveRoute
   '/remove-pages': typeof RemovePagesRoute
+  '/repair-pdf': typeof RepairPdfRoute
   '/sign-pdf': typeof SignPdfRoute
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
@@ -121,12 +166,17 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/compress-pdf'
     | '/extract-pages'
+    | '/flatten-pdf'
     | '/image-to-pdf'
     | '/lock-pdf'
     | '/merge-pdf'
+    | '/ocr-pdf'
     | '/organize-pdf'
+    | '/pdfa-archive'
     | '/remove-pages'
+    | '/repair-pdf'
     | '/sign-pdf'
     | '/split-pdf'
     | '/unlock-pdf'
@@ -134,12 +184,17 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/compress-pdf'
     | '/extract-pages'
+    | '/flatten-pdf'
     | '/image-to-pdf'
     | '/lock-pdf'
     | '/merge-pdf'
+    | '/ocr-pdf'
     | '/organize-pdf'
+    | '/pdfa-archive'
     | '/remove-pages'
+    | '/repair-pdf'
     | '/sign-pdf'
     | '/split-pdf'
     | '/unlock-pdf'
@@ -147,12 +202,17 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/compress-pdf'
     | '/extract-pages'
+    | '/flatten-pdf'
     | '/image-to-pdf'
     | '/lock-pdf'
     | '/merge-pdf'
+    | '/ocr-pdf'
     | '/organize-pdf'
+    | '/pdfa-archive'
     | '/remove-pages'
+    | '/repair-pdf'
     | '/sign-pdf'
     | '/split-pdf'
     | '/unlock-pdf'
@@ -161,12 +221,17 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CompressPdfRoute: typeof CompressPdfRoute
   ExtractPagesRoute: typeof ExtractPagesRoute
+  FlattenPdfRoute: typeof FlattenPdfRoute
   ImageToPdfRoute: typeof ImageToPdfRoute
   LockPdfRoute: typeof LockPdfRoute
   MergePdfRoute: typeof MergePdfRoute
+  OcrPdfRoute: typeof OcrPdfRoute
   OrganizePdfRoute: typeof OrganizePdfRoute
+  PdfaArchiveRoute: typeof PdfaArchiveRoute
   RemovePagesRoute: typeof RemovePagesRoute
+  RepairPdfRoute: typeof RepairPdfRoute
   SignPdfRoute: typeof SignPdfRoute
   SplitPdfRoute: typeof SplitPdfRoute
   UnlockPdfRoute: typeof UnlockPdfRoute
@@ -182,11 +247,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compress-pdf': {
+      id: '/compress-pdf'
+      path: '/compress-pdf'
+      fullPath: '/compress-pdf'
+      preLoaderRoute: typeof CompressPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/extract-pages': {
       id: '/extract-pages'
       path: '/extract-pages'
       fullPath: '/extract-pages'
       preLoaderRoute: typeof ExtractPagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flatten-pdf': {
+      id: '/flatten-pdf'
+      path: '/flatten-pdf'
+      fullPath: '/flatten-pdf'
+      preLoaderRoute: typeof FlattenPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/image-to-pdf': {
@@ -210,6 +289,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MergePdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ocr-pdf': {
+      id: '/ocr-pdf'
+      path: '/ocr-pdf'
+      fullPath: '/ocr-pdf'
+      preLoaderRoute: typeof OcrPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/organize-pdf': {
       id: '/organize-pdf'
       path: '/organize-pdf'
@@ -217,11 +303,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrganizePdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pdfa-archive': {
+      id: '/pdfa-archive'
+      path: '/pdfa-archive'
+      fullPath: '/pdfa-archive'
+      preLoaderRoute: typeof PdfaArchiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/remove-pages': {
       id: '/remove-pages'
       path: '/remove-pages'
       fullPath: '/remove-pages'
       preLoaderRoute: typeof RemovePagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/repair-pdf': {
+      id: '/repair-pdf'
+      path: '/repair-pdf'
+      fullPath: '/repair-pdf'
+      preLoaderRoute: typeof RepairPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sign-pdf': {
@@ -257,12 +357,17 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CompressPdfRoute: CompressPdfRoute,
   ExtractPagesRoute: ExtractPagesRoute,
+  FlattenPdfRoute: FlattenPdfRoute,
   ImageToPdfRoute: ImageToPdfRoute,
   LockPdfRoute: LockPdfRoute,
   MergePdfRoute: MergePdfRoute,
+  OcrPdfRoute: OcrPdfRoute,
   OrganizePdfRoute: OrganizePdfRoute,
+  PdfaArchiveRoute: PdfaArchiveRoute,
   RemovePagesRoute: RemovePagesRoute,
+  RepairPdfRoute: RepairPdfRoute,
   SignPdfRoute: SignPdfRoute,
   SplitPdfRoute: SplitPdfRoute,
   UnlockPdfRoute: UnlockPdfRoute,

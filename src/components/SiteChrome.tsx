@@ -23,6 +23,7 @@ import {
   ScanText,
   ShieldCheck,
   type LucideIcon,
+  Wrench,
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -69,7 +70,11 @@ const pdfItems = [
   { icon: RotateCw, title: "Organize PDF", text: "Reorder, rotate, or remove pages", href: "/organize-pdf" },
   { icon: FilePlus, title: "Extract pages", text: "Save selected pages as a new PDF", href: "/extract-pages" },
   { icon: FileMinus, title: "Remove pages", text: "Delete pages from a PDF", href: "/remove-pages" },
-  { icon: Minimize, title: "Compress and repair", text: "Coming soon · Optimize PDF", href: "/#optimize-pdf" },
+  { icon: Minimize, title: "Compress PDF", text: "Optimize streams and structure", href: "/compress-pdf" },
+  { icon: Wrench, title: "Repair PDF", text: "Try structural recovery", href: "/repair-pdf" },
+  { icon: ScanText, title: "OCR PDF", text: "Make scanned pages searchable", href: "/ocr-pdf" },
+  { icon: FilePlus, title: "Flatten PDF", text: "Flatten interactive form fields", href: "/flatten-pdf" },
+  { icon: ShieldCheck, title: "PDF/A archive", text: "Prepare an archive candidate", href: "/pdfa-archive" },
   { icon: FileImage, title: "Convert documents", text: "PDF, images, and office files", href: "/#convert-pdf" },
   { icon: Pencil, title: "Edit PDF", text: "Coming soon · Edit and sign", href: "/#edit-pdf" },
   { icon: ShieldCheck, title: "Redact PDF", text: "Coming soon · PDF security", href: "/#security-pdf" },
@@ -238,6 +243,11 @@ const footerTools = [
   ["Unlock PDF", "/unlock-pdf"],
   ["Sign PDF", "/sign-pdf"],
   ["Watermark PDF", "/watermark-pdf"],
+  ["Compress PDF", "/compress-pdf"],
+  ["Repair PDF", "/repair-pdf"],
+  ["OCR PDF", "/ocr-pdf"],
+  ["Flatten PDF", "/flatten-pdf"],
+  ["PDF/A archive", "/pdfa-archive"],
 ];
 
 export function SiteFooter() {

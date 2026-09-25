@@ -72,11 +72,11 @@ const toolGroups = [
     description: "Improve file size and recover more from your documents.",
     icon: Minimize,
     tools: [
-      { icon: Minimize, title: "Compress PDF", description: "Reduce file size while keeping pages readable." },
-      { icon: Wrench, title: "Repair PDF", description: "Try to recover content from damaged documents." },
-      { icon: ScanText, title: "OCR PDF", description: "Make scanned pages searchable and selectable." },
-      { icon: FilePlus, title: "Flatten PDF", description: "Make form fields and annotations part of the page." },
-      { icon: ShieldCheck, title: "PDF/A archive", description: "Prepare documents for reliable long-term storage." },
+      { icon: Minimize, title: "Compress PDF", description: "Reduce file size without lowering image quality.", href: "/compress-pdf" },
+      { icon: Wrench, title: "Repair PDF", description: "Recover readable content from structural PDF damage.", href: "/repair-pdf" },
+      { icon: ScanText, title: "OCR PDF", description: "Recognize English text in scanned pages.", href: "/ocr-pdf" },
+      { icon: FilePlus, title: "Flatten PDF", description: "Bake interactive form fields into page content.", href: "/flatten-pdf" },
+      { icon: ShieldCheck, title: "PDF/A archive", description: "Prepare an archive copy for standards validation.", href: "/pdfa-archive" },
     ],
   },
   {
