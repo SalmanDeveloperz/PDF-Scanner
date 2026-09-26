@@ -9,3 +9,5 @@ export const IMAGE_TO_PDF_LIMITS = {
 
 export type ImagePdfPaperSize = "a4" | "letter" | "fit";
 export type ImagePdfMargin = 0 | 24 | 48;
+export type ImagePdfEnhancement = "natural" | "grayscale" | "high-contrast";
+export type ImagePdfOptions = { enhancement?: ImagePdfEnhancement; rotations?: number[] };

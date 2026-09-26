@@ -32,7 +32,9 @@ See [Plan.md](./Plan.md) for the approved content sources, information architect
 - **Rendering:** Static prerendered homepage
 - **Media:** Managed asset pointers for the supplied product graphics
 
-The current release is intentionally frontend-only. It does not need authentication, a database, or an API because all approved product information is public and static.
+Product information is public and static. The PDF tools currently process files in the user's browser; this repository does not yet include an office-conversion backend, authentication, or a database.
+
+See the [PDF Scanner tool guide](./docs/TOOL_GUIDE.md) for available and planned tools, libraries, processing approaches, limits, caveats, and release test cases.
 
 ## Requirements
 
@@ -66,17 +68,18 @@ bun run preview   # Preview a local production build
 ```text
 src/
 ├── assets/product/       Managed pointers for authentic product visuals
-├── components/ui/        Shared accessible UI primitives
+├── components/           Shared UI, accessible primitives, and PDF tool interfaces
 ├── content/product.ts    Approved product facts, links, and review excerpts
-├── routes/
-│   ├── __root.tsx        Document shell, global metadata, and font loading
-│   └── index.tsx         Public product homepage and route metadata
+├── lib/                  Tool limits, validation, and shared logic
+├── routes/               Homepage and file-based tool routes
+├── workers/              Background PDF/image processing workers
 ├── router.tsx            TanStack Router configuration
 └── styles.css            Tailwind setup and semantic design tokens
 public/
 ├── favicon.svg
 └── robots.txt
 Plan.md                   Product, content, design, and quality plan
+docs/TOOL_GUIDE.md        Tool implementation, limits, caveats, and QA guide
 vite.config.ts            Static prerender configuration
 ```
 

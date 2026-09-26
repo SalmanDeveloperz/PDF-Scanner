@@ -11,6 +11,7 @@ import {
   FileMinus,
   FilePlus,
   Files,
+  GitCompare,
   Images,
   LockKeyhole,
   Menu,
@@ -20,6 +21,9 @@ import {
   Minimize,
   Pencil,
   RotateCw,
+  ReceiptText,
+  FileSearch,
+  FileText,
   ScanText,
   ShieldCheck,
   type LucideIcon,
@@ -31,7 +35,12 @@ import pdfLogo from "@/assets/pdf-logo.webp";
 import { COMPANY_URL, PLAY_STORE_URL, SUPPORT_EMAIL } from "@/content/product";
 
 const scanItems = [
-  { icon: Camera, title: "Scan documents", text: "Capture pages and receipts", href: "/#features" },
+  {
+    icon: Camera,
+    title: "Scan documents",
+    text: "Capture pages into a multi-page PDF",
+    href: "/scan-documents",
+  },
   {
     icon: CreditCard,
     title: "IDs & passports",
@@ -45,13 +54,42 @@ const scanItems = [
     href: "/#how-it-works",
   },
   { icon: Images, title: "Image to PDF", text: "Build a PDF from photos", href: "/image-to-pdf" },
-  { icon: RotateCw, title: "Smart page cleanup", text: "Coming soon · Scan and OCR", href: "/#scan-ocr" },
-  { icon: ScanText, title: "Recognize text", text: "Coming soon · Scan and OCR", href: "/#scan-ocr" },
+  {
+    icon: RotateCw,
+    title: "Smart page cleanup",
+    text: "Rotate and enhance pages",
+    href: "/smart-page-cleanup",
+  },
+  {
+    icon: ScanText,
+    title: "Recognize text",
+    text: "Make scanned PDFs searchable",
+    href: "/ocr-pdf",
+  },
+  {
+    icon: Images,
+    title: "Photo to searchable PDF",
+    text: "Create and OCR a photo PDF",
+    href: "/photo-to-searchable-pdf",
+  },
+  {
+    icon: ReceiptText,
+    title: "Receipt data extractor",
+    text: "Review fields suggested by OCR",
+    href: "/receipt-data-extractor",
+  },
+  {
+    icon: FileText,
+    title: "Batch rename scans",
+    text: "Review names suggested by OCR",
+    href: "/batch-rename-scans",
+  },
 ];
 
 const pdfItems = [
   { icon: Files, title: "Merge PDF", text: "Combine documents in order", href: "/merge-pdf" },
   { icon: FileImage, title: "Image to PDF", text: "Turn photos into pages", href: "/image-to-pdf" },
+  { icon: FileImage, title: "PDF to JPG", text: "Export pages as images", href: "/pdf-to-jpg" },
   {
     icon: LockKeyhole,
     title: "Lock PDF",
@@ -67,18 +105,75 @@ const pdfItems = [
   { icon: PenLine, title: "Sign PDF", text: "Add a drawn signature", href: "/sign-pdf" },
   { icon: Stamp, title: "Watermark PDF", text: "Label and brand pages", href: "/watermark-pdf" },
   { icon: Files, title: "Split PDF", text: "Separate selected pages", href: "/split-pdf" },
-  { icon: RotateCw, title: "Organize PDF", text: "Reorder, rotate, or remove pages", href: "/organize-pdf" },
-  { icon: FilePlus, title: "Extract pages", text: "Save selected pages as a new PDF", href: "/extract-pages" },
-  { icon: FileMinus, title: "Remove pages", text: "Delete pages from a PDF", href: "/remove-pages" },
-  { icon: Minimize, title: "Compress PDF", text: "Optimize streams and structure", href: "/compress-pdf" },
+  {
+    icon: RotateCw,
+    title: "Organize PDF",
+    text: "Reorder, rotate, or remove pages",
+    href: "/organize-pdf",
+  },
+  {
+    icon: FilePlus,
+    title: "Extract pages",
+    text: "Save selected pages as a new PDF",
+    href: "/extract-pages",
+  },
+  {
+    icon: FileMinus,
+    title: "Remove pages",
+    text: "Delete pages from a PDF",
+    href: "/remove-pages",
+  },
+  {
+    icon: Minimize,
+    title: "Compress PDF",
+    text: "Optimize streams and structure",
+    href: "/compress-pdf",
+  },
   { icon: Wrench, title: "Repair PDF", text: "Try structural recovery", href: "/repair-pdf" },
   { icon: ScanText, title: "OCR PDF", text: "Make scanned pages searchable", href: "/ocr-pdf" },
-  { icon: FilePlus, title: "Flatten PDF", text: "Flatten interactive form fields", href: "/flatten-pdf" },
-  { icon: ShieldCheck, title: "PDF/A archive", text: "Prepare an archive candidate", href: "/pdfa-archive" },
-  { icon: FileImage, title: "Convert documents", text: "PDF, images, and office files", href: "/#convert-pdf" },
+  {
+    icon: FileMinus,
+    title: "Clean PDF metadata",
+    text: "Remove standard document metadata",
+    href: "/clean-pdf-metadata",
+  },
+  {
+    icon: GitCompare,
+    title: "Compare PDFs",
+    text: "Review page and text differences",
+    href: "/compare-pdfs",
+  },
+  {
+    icon: FilePlus,
+    title: "Flatten PDF",
+    text: "Flatten interactive form fields",
+    href: "/flatten-pdf",
+  },
+  {
+    icon: ShieldCheck,
+    title: "PDF/A archive",
+    text: "Prepare an archive candidate",
+    href: "/pdfa-archive",
+  },
+  {
+    icon: FileImage,
+    title: "Convert documents",
+    text: "PDF, images, and office files",
+    href: "/#convert-pdf",
+  },
   { icon: Pencil, title: "Edit PDF", text: "Coming soon · Edit and sign", href: "/#edit-pdf" },
-  { icon: ShieldCheck, title: "Redact PDF", text: "Coming soon · PDF security", href: "/#security-pdf" },
-  { icon: Camera, title: "Scan and recognize", text: "Coming soon · Scan and OCR", href: "/#scan-ocr" },
+  {
+    icon: ShieldCheck,
+    title: "Redact PDF",
+    text: "Permanently remove selected page content",
+    href: "/redact-pdf",
+  },
+  {
+    icon: Camera,
+    title: "Scan and recognize",
+    text: "Coming soon · Scan and OCR",
+    href: "/#scan-ocr",
+  },
 ];
 
 const navItems = [
@@ -190,7 +285,13 @@ export function SiteHeader() {
       <nav className="site-category-nav" aria-label="Browse tool categories">
         <div className="site-category-nav-inner">
           {toolCategoryLinks.map(({ title, href, icon: Icon }, index) => (
-            <a key={href} href={href} className={index === 0 ? "site-category-link site-category-link-all" : "site-category-link"}>
+            <a
+              key={href}
+              href={href}
+              className={
+                index === 0 ? "site-category-link site-category-link-all" : "site-category-link"
+              }
+            >
               {index > 0 && <Icon aria-hidden="true" />}
               {title}
             </a>
@@ -248,6 +349,15 @@ const footerTools = [
   ["OCR PDF", "/ocr-pdf"],
   ["Flatten PDF", "/flatten-pdf"],
   ["PDF/A archive", "/pdfa-archive"],
+  ["PDF to JPG", "/pdf-to-jpg"],
+  ["Clean PDF metadata", "/clean-pdf-metadata"],
+  ["Compare PDFs", "/compare-pdfs"],
+  ["Redact PDF", "/redact-pdf"],
+  ["Scan documents", "/scan-documents"],
+  ["Photo to searchable PDF", "/photo-to-searchable-pdf"],
+  ["Smart page cleanup", "/smart-page-cleanup"],
+  ["Receipt data extractor", "/receipt-data-extractor"],
+  ["Batch rename scans", "/batch-rename-scans"],
 ];
 
 export function SiteFooter() {

@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BatchRenameScansRouteImport } from './routes/batch-rename-scans'
+import { Route as CleanPdfMetadataRouteImport } from './routes/clean-pdf-metadata'
+import { Route as ComparePdfsRouteImport } from './routes/compare-pdfs'
 import { Route as CompressPdfRouteImport } from './routes/compress-pdf'
 import { Route as ExtractPagesRouteImport } from './routes/extract-pages'
 import { Route as FlattenPdfRouteImport } from './routes/flatten-pdf'
@@ -18,10 +21,16 @@ import { Route as LockPdfRouteImport } from './routes/lock-pdf'
 import { Route as MergePdfRouteImport } from './routes/merge-pdf'
 import { Route as OcrPdfRouteImport } from './routes/ocr-pdf'
 import { Route as OrganizePdfRouteImport } from './routes/organize-pdf'
+import { Route as PdfToJpgRouteImport } from './routes/pdf-to-jpg'
 import { Route as PdfaArchiveRouteImport } from './routes/pdfa-archive'
+import { Route as PhotoToSearchablePdfRouteImport } from './routes/photo-to-searchable-pdf'
+import { Route as ReceiptDataExtractorRouteImport } from './routes/receipt-data-extractor'
+import { Route as RedactPdfRouteImport } from './routes/redact-pdf'
 import { Route as RemovePagesRouteImport } from './routes/remove-pages'
 import { Route as RepairPdfRouteImport } from './routes/repair-pdf'
+import { Route as ScanDocumentsRouteImport } from './routes/scan-documents'
 import { Route as SignPdfRouteImport } from './routes/sign-pdf'
+import { Route as SmartPageCleanupRouteImport } from './routes/smart-page-cleanup'
 import { Route as SplitPdfRouteImport } from './routes/split-pdf'
 import { Route as UnlockPdfRouteImport } from './routes/unlock-pdf'
 import { Route as WatermarkPdfRouteImport } from './routes/watermark-pdf'
@@ -29,6 +38,21 @@ import { Route as WatermarkPdfRouteImport } from './routes/watermark-pdf'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BatchRenameScansRoute = BatchRenameScansRouteImport.update({
+  id: '/batch-rename-scans',
+  path: '/batch-rename-scans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CleanPdfMetadataRoute = CleanPdfMetadataRouteImport.update({
+  id: '/clean-pdf-metadata',
+  path: '/clean-pdf-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComparePdfsRoute = ComparePdfsRouteImport.update({
+  id: '/compare-pdfs',
+  path: '/compare-pdfs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompressPdfRoute = CompressPdfRouteImport.update({
@@ -71,9 +95,29 @@ const OrganizePdfRoute = OrganizePdfRouteImport.update({
   path: '/organize-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PdfToJpgRoute = PdfToJpgRouteImport.update({
+  id: '/pdf-to-jpg',
+  path: '/pdf-to-jpg',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PdfaArchiveRoute = PdfaArchiveRouteImport.update({
   id: '/pdfa-archive',
   path: '/pdfa-archive',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhotoToSearchablePdfRoute = PhotoToSearchablePdfRouteImport.update({
+  id: '/photo-to-searchable-pdf',
+  path: '/photo-to-searchable-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceiptDataExtractorRoute = ReceiptDataExtractorRouteImport.update({
+  id: '/receipt-data-extractor',
+  path: '/receipt-data-extractor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RedactPdfRoute = RedactPdfRouteImport.update({
+  id: '/redact-pdf',
+  path: '/redact-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RemovePagesRoute = RemovePagesRouteImport.update({
@@ -86,9 +130,19 @@ const RepairPdfRoute = RepairPdfRouteImport.update({
   path: '/repair-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScanDocumentsRoute = ScanDocumentsRouteImport.update({
+  id: '/scan-documents',
+  path: '/scan-documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignPdfRoute = SignPdfRouteImport.update({
   id: '/sign-pdf',
   path: '/sign-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SmartPageCleanupRoute = SmartPageCleanupRouteImport.update({
+  id: '/smart-page-cleanup',
+  path: '/smart-page-cleanup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SplitPdfRoute = SplitPdfRouteImport.update({
@@ -109,6 +163,9 @@ const WatermarkPdfRoute = WatermarkPdfRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/batch-rename-scans': typeof BatchRenameScansRoute
+  '/clean-pdf-metadata': typeof CleanPdfMetadataRoute
+  '/compare-pdfs': typeof ComparePdfsRoute
   '/compress-pdf': typeof CompressPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
@@ -117,16 +174,25 @@ export interface FileRoutesByFullPath {
   '/merge-pdf': typeof MergePdfRoute
   '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
+  '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
+  '/receipt-data-extractor': typeof ReceiptDataExtractorRoute
+  '/redact-pdf': typeof RedactPdfRoute
   '/remove-pages': typeof RemovePagesRoute
   '/repair-pdf': typeof RepairPdfRoute
+  '/scan-documents': typeof ScanDocumentsRoute
   '/sign-pdf': typeof SignPdfRoute
+  '/smart-page-cleanup': typeof SmartPageCleanupRoute
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
   '/watermark-pdf': typeof WatermarkPdfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/batch-rename-scans': typeof BatchRenameScansRoute
+  '/clean-pdf-metadata': typeof CleanPdfMetadataRoute
+  '/compare-pdfs': typeof ComparePdfsRoute
   '/compress-pdf': typeof CompressPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
@@ -135,10 +201,16 @@ export interface FileRoutesByTo {
   '/merge-pdf': typeof MergePdfRoute
   '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
+  '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
+  '/receipt-data-extractor': typeof ReceiptDataExtractorRoute
+  '/redact-pdf': typeof RedactPdfRoute
   '/remove-pages': typeof RemovePagesRoute
   '/repair-pdf': typeof RepairPdfRoute
+  '/scan-documents': typeof ScanDocumentsRoute
   '/sign-pdf': typeof SignPdfRoute
+  '/smart-page-cleanup': typeof SmartPageCleanupRoute
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
   '/watermark-pdf': typeof WatermarkPdfRoute
@@ -146,6 +218,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/batch-rename-scans': typeof BatchRenameScansRoute
+  '/clean-pdf-metadata': typeof CleanPdfMetadataRoute
+  '/compare-pdfs': typeof ComparePdfsRoute
   '/compress-pdf': typeof CompressPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
@@ -154,10 +229,16 @@ export interface FileRoutesById {
   '/merge-pdf': typeof MergePdfRoute
   '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
+  '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
+  '/receipt-data-extractor': typeof ReceiptDataExtractorRoute
+  '/redact-pdf': typeof RedactPdfRoute
   '/remove-pages': typeof RemovePagesRoute
   '/repair-pdf': typeof RepairPdfRoute
+  '/scan-documents': typeof ScanDocumentsRoute
   '/sign-pdf': typeof SignPdfRoute
+  '/smart-page-cleanup': typeof SmartPageCleanupRoute
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
   '/watermark-pdf': typeof WatermarkPdfRoute
@@ -166,6 +247,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/batch-rename-scans'
+    | '/clean-pdf-metadata'
+    | '/compare-pdfs'
     | '/compress-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
@@ -174,16 +258,25 @@ export interface FileRouteTypes {
     | '/merge-pdf'
     | '/ocr-pdf'
     | '/organize-pdf'
+    | '/pdf-to-jpg'
     | '/pdfa-archive'
+    | '/photo-to-searchable-pdf'
+    | '/receipt-data-extractor'
+    | '/redact-pdf'
     | '/remove-pages'
     | '/repair-pdf'
+    | '/scan-documents'
     | '/sign-pdf'
+    | '/smart-page-cleanup'
     | '/split-pdf'
     | '/unlock-pdf'
     | '/watermark-pdf'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/batch-rename-scans'
+    | '/clean-pdf-metadata'
+    | '/compare-pdfs'
     | '/compress-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
@@ -192,16 +285,25 @@ export interface FileRouteTypes {
     | '/merge-pdf'
     | '/ocr-pdf'
     | '/organize-pdf'
+    | '/pdf-to-jpg'
     | '/pdfa-archive'
+    | '/photo-to-searchable-pdf'
+    | '/receipt-data-extractor'
+    | '/redact-pdf'
     | '/remove-pages'
     | '/repair-pdf'
+    | '/scan-documents'
     | '/sign-pdf'
+    | '/smart-page-cleanup'
     | '/split-pdf'
     | '/unlock-pdf'
     | '/watermark-pdf'
   id:
     | '__root__'
     | '/'
+    | '/batch-rename-scans'
+    | '/clean-pdf-metadata'
+    | '/compare-pdfs'
     | '/compress-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
@@ -210,10 +312,16 @@ export interface FileRouteTypes {
     | '/merge-pdf'
     | '/ocr-pdf'
     | '/organize-pdf'
+    | '/pdf-to-jpg'
     | '/pdfa-archive'
+    | '/photo-to-searchable-pdf'
+    | '/receipt-data-extractor'
+    | '/redact-pdf'
     | '/remove-pages'
     | '/repair-pdf'
+    | '/scan-documents'
     | '/sign-pdf'
+    | '/smart-page-cleanup'
     | '/split-pdf'
     | '/unlock-pdf'
     | '/watermark-pdf'
@@ -221,6 +329,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BatchRenameScansRoute: typeof BatchRenameScansRoute
+  CleanPdfMetadataRoute: typeof CleanPdfMetadataRoute
+  ComparePdfsRoute: typeof ComparePdfsRoute
   CompressPdfRoute: typeof CompressPdfRoute
   ExtractPagesRoute: typeof ExtractPagesRoute
   FlattenPdfRoute: typeof FlattenPdfRoute
@@ -229,10 +340,16 @@ export interface RootRouteChildren {
   MergePdfRoute: typeof MergePdfRoute
   OcrPdfRoute: typeof OcrPdfRoute
   OrganizePdfRoute: typeof OrganizePdfRoute
+  PdfToJpgRoute: typeof PdfToJpgRoute
   PdfaArchiveRoute: typeof PdfaArchiveRoute
+  PhotoToSearchablePdfRoute: typeof PhotoToSearchablePdfRoute
+  ReceiptDataExtractorRoute: typeof ReceiptDataExtractorRoute
+  RedactPdfRoute: typeof RedactPdfRoute
   RemovePagesRoute: typeof RemovePagesRoute
   RepairPdfRoute: typeof RepairPdfRoute
+  ScanDocumentsRoute: typeof ScanDocumentsRoute
   SignPdfRoute: typeof SignPdfRoute
+  SmartPageCleanupRoute: typeof SmartPageCleanupRoute
   SplitPdfRoute: typeof SplitPdfRoute
   UnlockPdfRoute: typeof UnlockPdfRoute
   WatermarkPdfRoute: typeof WatermarkPdfRoute
@@ -245,6 +362,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/batch-rename-scans': {
+      id: '/batch-rename-scans'
+      path: '/batch-rename-scans'
+      fullPath: '/batch-rename-scans'
+      preLoaderRoute: typeof BatchRenameScansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clean-pdf-metadata': {
+      id: '/clean-pdf-metadata'
+      path: '/clean-pdf-metadata'
+      fullPath: '/clean-pdf-metadata'
+      preLoaderRoute: typeof CleanPdfMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare-pdfs': {
+      id: '/compare-pdfs'
+      path: '/compare-pdfs'
+      fullPath: '/compare-pdfs'
+      preLoaderRoute: typeof ComparePdfsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compress-pdf': {
@@ -303,11 +441,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrganizePdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pdf-to-jpg': {
+      id: '/pdf-to-jpg'
+      path: '/pdf-to-jpg'
+      fullPath: '/pdf-to-jpg'
+      preLoaderRoute: typeof PdfToJpgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pdfa-archive': {
       id: '/pdfa-archive'
       path: '/pdfa-archive'
       fullPath: '/pdfa-archive'
       preLoaderRoute: typeof PdfaArchiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photo-to-searchable-pdf': {
+      id: '/photo-to-searchable-pdf'
+      path: '/photo-to-searchable-pdf'
+      fullPath: '/photo-to-searchable-pdf'
+      preLoaderRoute: typeof PhotoToSearchablePdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/receipt-data-extractor': {
+      id: '/receipt-data-extractor'
+      path: '/receipt-data-extractor'
+      fullPath: '/receipt-data-extractor'
+      preLoaderRoute: typeof ReceiptDataExtractorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/redact-pdf': {
+      id: '/redact-pdf'
+      path: '/redact-pdf'
+      fullPath: '/redact-pdf'
+      preLoaderRoute: typeof RedactPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/remove-pages': {
@@ -324,11 +490,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RepairPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scan-documents': {
+      id: '/scan-documents'
+      path: '/scan-documents'
+      fullPath: '/scan-documents'
+      preLoaderRoute: typeof ScanDocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-pdf': {
       id: '/sign-pdf'
       path: '/sign-pdf'
       fullPath: '/sign-pdf'
       preLoaderRoute: typeof SignPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/smart-page-cleanup': {
+      id: '/smart-page-cleanup'
+      path: '/smart-page-cleanup'
+      fullPath: '/smart-page-cleanup'
+      preLoaderRoute: typeof SmartPageCleanupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/split-pdf': {
@@ -357,6 +537,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BatchRenameScansRoute: BatchRenameScansRoute,
+  CleanPdfMetadataRoute: CleanPdfMetadataRoute,
+  ComparePdfsRoute: ComparePdfsRoute,
   CompressPdfRoute: CompressPdfRoute,
   ExtractPagesRoute: ExtractPagesRoute,
   FlattenPdfRoute: FlattenPdfRoute,
@@ -365,10 +548,16 @@ const rootRouteChildren: RootRouteChildren = {
   MergePdfRoute: MergePdfRoute,
   OcrPdfRoute: OcrPdfRoute,
   OrganizePdfRoute: OrganizePdfRoute,
+  PdfToJpgRoute: PdfToJpgRoute,
   PdfaArchiveRoute: PdfaArchiveRoute,
+  PhotoToSearchablePdfRoute: PhotoToSearchablePdfRoute,
+  ReceiptDataExtractorRoute: ReceiptDataExtractorRoute,
+  RedactPdfRoute: RedactPdfRoute,
   RemovePagesRoute: RemovePagesRoute,
   RepairPdfRoute: RepairPdfRoute,
+  ScanDocumentsRoute: ScanDocumentsRoute,
   SignPdfRoute: SignPdfRoute,
+  SmartPageCleanupRoute: SmartPageCleanupRoute,
   SplitPdfRoute: SplitPdfRoute,
   UnlockPdfRoute: UnlockPdfRoute,
   WatermarkPdfRoute: WatermarkPdfRoute,

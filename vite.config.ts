@@ -10,7 +10,12 @@ export default defineConfig({
     ...tanstackStart({
       server: { entry: "server" },
       pages: [{ path: "/" }],
-      prerender: { enabled: true },
+      prerender: {
+        enabled: true,
+        concurrency: 2,
+        retryCount: 3,
+        retryDelay: 1_000,
+      },
     }),
     react(),
     tailwindcss(),

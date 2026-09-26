@@ -2,6 +2,7 @@ import { PDFDocument, PageSizes } from "pdf-lib";
 import {
   IMAGE_TO_PDF_LIMITS,
   type ImagePdfMargin,
+  type ImagePdfOptions,
   type ImagePdfPaperSize,
 } from "@/lib/image-to-pdf";
 
@@ -9,6 +10,7 @@ type WorkerRequest = {
   files: File[];
   paperSize: ImagePdfPaperSize;
   margin: ImagePdfMargin;
+  options?: ImagePdfOptions;
 };
 type WorkerResponse =
   | { type: "progress"; completed: number; total: number; fileName: string }
@@ -38,7 +40,8 @@ function classifyImageError(error: unknown): ImageWorkerErrorCode {
   const message = error instanceof Error ? error.message.toLowerCase() : "";
   if (message === "image-too-large") return "image-too-large";
   if (message === "too-many-pixels") return "too-many-pixels";
-  if (message === "unsupported-canvas") return "processor-unavailable";
+  if (message === "unsupported-canvas" || message === "unsupported-enhancement")
+    return "processor-unavailable";
   if (
     message.includes("out of memory") ||
     message.includes("array buffer allocation failed") ||
@@ -72,7 +75,7 @@ function getPageDimensions(
 }
 
 workerScope.onmessage = async (event: MessageEvent<WorkerRequest>) => {
-  const { files, paperSize, margin } = event.data;
+  const { files, paperSize, margin, options } = event.data;
   let currentFileName: string | undefined;
   let bitmap: ImageBitmap | undefined;
   try {
@@ -138,15 +141,33 @@ workerScope.onmessage = async (event: MessageEvent<WorkerRequest>) => {
 
       try {
         if (typeof OffscreenCanvas === "undefined") throw new Error("unsupported-canvas");
-        const preserveAlpha = file.type === "image/png" || /\.png$/i.test(file.name);
-        const canvas = new OffscreenCanvas(width, height);
+        const rotation = (((options?.rotations?.[index] ?? 0) % 360) + 360) % 360;
+        if (![0, 90, 180, 270].includes(rotation)) throw new Error("invalid-rotation");
+        const outputWidth = rotation === 90 || rotation === 270 ? height : width;
+        const outputHeight = rotation === 90 || rotation === 270 ? width : height;
+        const preserveAlpha =
+          (file.type === "image/png" || /\.png$/i.test(file.name)) && rotation === 0;
+        const canvas = new OffscreenCanvas(outputWidth, outputHeight);
         const context = canvas.getContext("2d", { alpha: preserveAlpha });
         if (!context) throw new Error("unsupported-canvas");
         if (!preserveAlpha) {
           context.fillStyle = "#ffffff";
-          context.fillRect(0, 0, width, height);
+          context.fillRect(0, 0, outputWidth, outputHeight);
         }
-        context.drawImage(decoded, 0, 0);
+        if (options?.enhancement && options.enhancement !== "natural") {
+          if (!("filter" in context)) throw new Error("unsupported-enhancement");
+          context.filter =
+            options.enhancement === "grayscale"
+              ? "grayscale(100%)"
+              : "grayscale(100%) contrast(150%)";
+        }
+        if (rotation === 0) context.drawImage(decoded, 0, 0, width, height);
+        else {
+          context.translate(outputWidth / 2, outputHeight / 2);
+          context.rotate((rotation * Math.PI) / 180);
+          context.drawImage(decoded, -width / 2, -height / 2, width, height);
+        }
+        context.filter = "none";
 
         // PNG output keeps transparency. Other formats become a broadly supported JPEG.
         const imageBlob = await canvas.convertToBlob(
@@ -160,14 +181,14 @@ workerScope.onmessage = async (event: MessageEvent<WorkerRequest>) => {
         const embedded = preserveAlpha
           ? await pdf.embedPng(imageBytes)
           : await pdf.embedJpg(imageBytes);
-        const [pageWidth, pageHeight] = getPageDimensions(paperSize, width, height);
+        const [pageWidth, pageHeight] = getPageDimensions(paperSize, outputWidth, outputHeight);
         const page = pdf.addPage([pageWidth, pageHeight]);
         const inset = paperSize === "fit" ? 0 : margin;
         const availableWidth = pageWidth - inset * 2;
         const availableHeight = pageHeight - inset * 2;
-        const scale = Math.min(availableWidth / width, availableHeight / height);
-        const drawWidth = width * scale;
-        const drawHeight = height * scale;
+        const scale = Math.min(availableWidth / outputWidth, availableHeight / outputHeight);
+        const drawWidth = outputWidth * scale;
+        const drawHeight = outputHeight * scale;
         page.drawImage(embedded, {
           x: (pageWidth - drawWidth) / 2,
           y: (pageHeight - drawHeight) / 2,
