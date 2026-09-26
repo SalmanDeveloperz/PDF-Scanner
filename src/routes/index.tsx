@@ -179,10 +179,21 @@ const toolGroups = [
       {
         icon: Pencil,
         title: "Edit PDF",
-        description: "Add text, notes, and shapes to a document.",
+        description: "Add text, notes, and shapes on top of a page.",
+        href: "/edit-pdf",
       },
-      { icon: Hash, title: "Page numbers", description: "Number pages with a consistent layout." },
-      { icon: Crop, title: "Crop PDF", description: "Trim page margins to the content you need." },
+      {
+        icon: Hash,
+        title: "Page numbers",
+        description: "Add consistent numbers to every page.",
+        href: "/page-numbers",
+      },
+      {
+        icon: Crop,
+        title: "Crop PDF",
+        description: "Adjust the visible page area with custom margins.",
+        href: "/crop-pdf",
+      },
     ],
   },
   {

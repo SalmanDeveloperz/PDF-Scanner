@@ -32,7 +32,7 @@ See [Plan.md](./Plan.md) for the approved content sources, information architect
 - **Rendering:** Static prerendered homepage
 - **Media:** Managed asset pointers for the supplied product graphics
 
-Product information is public and static. The PDF tools currently process files in the user's browser; this repository does not yet include an office-conversion backend, authentication, or a database.
+Product information is public and static. All PDF tools, including Word, Excel, and PowerPoint to PDF, process files in the user's browser; nothing is uploaded. This repository does not include a conversion backend, authentication, or a database.
 
 See the [PDF Scanner tool guide](./docs/TOOL_GUIDE.md) for available and planned tools, libraries, processing approaches, limits, caveats, and release test cases.
 
@@ -68,9 +68,11 @@ bun run preview   # Preview a local production build
 ```text
 src/
 ├── assets/product/       Managed pointers for authentic product visuals
+├── assets/fonts/office/  Metric-compatible fonts (SIL OFL) for vector PDF text
 ├── components/           Shared UI, accessible primitives, and PDF tool interfaces
 ├── content/product.ts    Approved product facts, links, and review excerpts
 ├── lib/                  Tool limits, validation, and shared logic
+│   └── office/           In-browser Word/Excel/PowerPoint to PDF engine
 ├── routes/               Homepage and file-based tool routes
 ├── workers/              Background PDF/image processing workers
 ├── router.tsx            TanStack Router configuration

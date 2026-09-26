@@ -12,6 +12,8 @@ import {
   FilePlus,
   Files,
   GitCompare,
+  Hash,
+  Crop,
   Images,
   LockKeyhole,
   Menu,
@@ -161,7 +163,14 @@ const pdfItems = [
     text: "PDF, images, and office files",
     href: "/#convert-pdf",
   },
-  { icon: Pencil, title: "Edit PDF", text: "Coming soon · Edit and sign", href: "/#edit-pdf" },
+  { icon: Pencil, title: "Edit PDF", text: "Add text, notes, and shapes", href: "/edit-pdf" },
+  {
+    icon: Hash,
+    title: "Page numbers",
+    text: "Number every page consistently",
+    href: "/page-numbers",
+  },
+  { icon: Crop, title: "Crop PDF", text: "Adjust visible page margins", href: "/crop-pdf" },
   {
     icon: ShieldCheck,
     title: "Redact PDF",
@@ -358,6 +367,9 @@ const footerTools = [
   ["Smart page cleanup", "/smart-page-cleanup"],
   ["Receipt data extractor", "/receipt-data-extractor"],
   ["Batch rename scans", "/batch-rename-scans"],
+  ["Edit PDF", "/edit-pdf"],
+  ["Page numbers", "/page-numbers"],
+  ["Crop PDF", "/crop-pdf"],
 ];
 
 export function SiteFooter() {

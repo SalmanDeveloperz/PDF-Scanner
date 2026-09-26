@@ -14,6 +14,8 @@ import { Route as BatchRenameScansRouteImport } from './routes/batch-rename-scan
 import { Route as CleanPdfMetadataRouteImport } from './routes/clean-pdf-metadata'
 import { Route as ComparePdfsRouteImport } from './routes/compare-pdfs'
 import { Route as CompressPdfRouteImport } from './routes/compress-pdf'
+import { Route as CropPdfRouteImport } from './routes/crop-pdf'
+import { Route as EditPdfRouteImport } from './routes/edit-pdf'
 import { Route as ExtractPagesRouteImport } from './routes/extract-pages'
 import { Route as FlattenPdfRouteImport } from './routes/flatten-pdf'
 import { Route as ImageToPdfRouteImport } from './routes/image-to-pdf'
@@ -21,6 +23,7 @@ import { Route as LockPdfRouteImport } from './routes/lock-pdf'
 import { Route as MergePdfRouteImport } from './routes/merge-pdf'
 import { Route as OcrPdfRouteImport } from './routes/ocr-pdf'
 import { Route as OrganizePdfRouteImport } from './routes/organize-pdf'
+import { Route as PageNumbersRouteImport } from './routes/page-numbers'
 import { Route as PdfToJpgRouteImport } from './routes/pdf-to-jpg'
 import { Route as PdfaArchiveRouteImport } from './routes/pdfa-archive'
 import { Route as PhotoToSearchablePdfRouteImport } from './routes/photo-to-searchable-pdf'
@@ -60,6 +63,16 @@ const CompressPdfRoute = CompressPdfRouteImport.update({
   path: '/compress-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CropPdfRoute = CropPdfRouteImport.update({
+  id: '/crop-pdf',
+  path: '/crop-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditPdfRoute = EditPdfRouteImport.update({
+  id: '/edit-pdf',
+  path: '/edit-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExtractPagesRoute = ExtractPagesRouteImport.update({
   id: '/extract-pages',
   path: '/extract-pages',
@@ -93,6 +106,11 @@ const OcrPdfRoute = OcrPdfRouteImport.update({
 const OrganizePdfRoute = OrganizePdfRouteImport.update({
   id: '/organize-pdf',
   path: '/organize-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PageNumbersRoute = PageNumbersRouteImport.update({
+  id: '/page-numbers',
+  path: '/page-numbers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PdfToJpgRoute = PdfToJpgRouteImport.update({
@@ -167,6 +185,8 @@ export interface FileRoutesByFullPath {
   '/clean-pdf-metadata': typeof CleanPdfMetadataRoute
   '/compare-pdfs': typeof ComparePdfsRoute
   '/compress-pdf': typeof CompressPdfRoute
+  '/crop-pdf': typeof CropPdfRoute
+  '/edit-pdf': typeof EditPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
@@ -174,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/merge-pdf': typeof MergePdfRoute
   '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/page-numbers': typeof PageNumbersRoute
   '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
   '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
@@ -194,6 +215,8 @@ export interface FileRoutesByTo {
   '/clean-pdf-metadata': typeof CleanPdfMetadataRoute
   '/compare-pdfs': typeof ComparePdfsRoute
   '/compress-pdf': typeof CompressPdfRoute
+  '/crop-pdf': typeof CropPdfRoute
+  '/edit-pdf': typeof EditPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
@@ -201,6 +224,7 @@ export interface FileRoutesByTo {
   '/merge-pdf': typeof MergePdfRoute
   '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/page-numbers': typeof PageNumbersRoute
   '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
   '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
@@ -222,6 +246,8 @@ export interface FileRoutesById {
   '/clean-pdf-metadata': typeof CleanPdfMetadataRoute
   '/compare-pdfs': typeof ComparePdfsRoute
   '/compress-pdf': typeof CompressPdfRoute
+  '/crop-pdf': typeof CropPdfRoute
+  '/edit-pdf': typeof EditPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
@@ -229,6 +255,7 @@ export interface FileRoutesById {
   '/merge-pdf': typeof MergePdfRoute
   '/ocr-pdf': typeof OcrPdfRoute
   '/organize-pdf': typeof OrganizePdfRoute
+  '/page-numbers': typeof PageNumbersRoute
   '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
   '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
@@ -251,6 +278,8 @@ export interface FileRouteTypes {
     | '/clean-pdf-metadata'
     | '/compare-pdfs'
     | '/compress-pdf'
+    | '/crop-pdf'
+    | '/edit-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
     | '/image-to-pdf'
@@ -258,6 +287,7 @@ export interface FileRouteTypes {
     | '/merge-pdf'
     | '/ocr-pdf'
     | '/organize-pdf'
+    | '/page-numbers'
     | '/pdf-to-jpg'
     | '/pdfa-archive'
     | '/photo-to-searchable-pdf'
@@ -278,6 +308,8 @@ export interface FileRouteTypes {
     | '/clean-pdf-metadata'
     | '/compare-pdfs'
     | '/compress-pdf'
+    | '/crop-pdf'
+    | '/edit-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
     | '/image-to-pdf'
@@ -285,6 +317,7 @@ export interface FileRouteTypes {
     | '/merge-pdf'
     | '/ocr-pdf'
     | '/organize-pdf'
+    | '/page-numbers'
     | '/pdf-to-jpg'
     | '/pdfa-archive'
     | '/photo-to-searchable-pdf'
@@ -305,6 +338,8 @@ export interface FileRouteTypes {
     | '/clean-pdf-metadata'
     | '/compare-pdfs'
     | '/compress-pdf'
+    | '/crop-pdf'
+    | '/edit-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
     | '/image-to-pdf'
@@ -312,6 +347,7 @@ export interface FileRouteTypes {
     | '/merge-pdf'
     | '/ocr-pdf'
     | '/organize-pdf'
+    | '/page-numbers'
     | '/pdf-to-jpg'
     | '/pdfa-archive'
     | '/photo-to-searchable-pdf'
@@ -333,6 +369,8 @@ export interface RootRouteChildren {
   CleanPdfMetadataRoute: typeof CleanPdfMetadataRoute
   ComparePdfsRoute: typeof ComparePdfsRoute
   CompressPdfRoute: typeof CompressPdfRoute
+  CropPdfRoute: typeof CropPdfRoute
+  EditPdfRoute: typeof EditPdfRoute
   ExtractPagesRoute: typeof ExtractPagesRoute
   FlattenPdfRoute: typeof FlattenPdfRoute
   ImageToPdfRoute: typeof ImageToPdfRoute
@@ -340,6 +378,7 @@ export interface RootRouteChildren {
   MergePdfRoute: typeof MergePdfRoute
   OcrPdfRoute: typeof OcrPdfRoute
   OrganizePdfRoute: typeof OrganizePdfRoute
+  PageNumbersRoute: typeof PageNumbersRoute
   PdfToJpgRoute: typeof PdfToJpgRoute
   PdfaArchiveRoute: typeof PdfaArchiveRoute
   PhotoToSearchablePdfRoute: typeof PhotoToSearchablePdfRoute
@@ -392,6 +431,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompressPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/crop-pdf': {
+      id: '/crop-pdf'
+      path: '/crop-pdf'
+      fullPath: '/crop-pdf'
+      preLoaderRoute: typeof CropPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/edit-pdf': {
+      id: '/edit-pdf'
+      path: '/edit-pdf'
+      fullPath: '/edit-pdf'
+      preLoaderRoute: typeof EditPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/extract-pages': {
       id: '/extract-pages'
       path: '/extract-pages'
@@ -439,6 +492,13 @@ declare module '@tanstack/react-router' {
       path: '/organize-pdf'
       fullPath: '/organize-pdf'
       preLoaderRoute: typeof OrganizePdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/page-numbers': {
+      id: '/page-numbers'
+      path: '/page-numbers'
+      fullPath: '/page-numbers'
+      preLoaderRoute: typeof PageNumbersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pdf-to-jpg': {
@@ -541,6 +601,8 @@ const rootRouteChildren: RootRouteChildren = {
   CleanPdfMetadataRoute: CleanPdfMetadataRoute,
   ComparePdfsRoute: ComparePdfsRoute,
   CompressPdfRoute: CompressPdfRoute,
+  CropPdfRoute: CropPdfRoute,
+  EditPdfRoute: EditPdfRoute,
   ExtractPagesRoute: ExtractPagesRoute,
   FlattenPdfRoute: FlattenPdfRoute,
   ImageToPdfRoute: ImageToPdfRoute,
@@ -548,6 +610,7 @@ const rootRouteChildren: RootRouteChildren = {
   MergePdfRoute: MergePdfRoute,
   OcrPdfRoute: OcrPdfRoute,
   OrganizePdfRoute: OrganizePdfRoute,
+  PageNumbersRoute: PageNumbersRoute,
   PdfToJpgRoute: PdfToJpgRoute,
   PdfaArchiveRoute: PdfaArchiveRoute,
   PhotoToSearchablePdfRoute: PhotoToSearchablePdfRoute,
