@@ -6,7 +6,6 @@ import {
   Check,
   BadgeCheck,
   Download,
-  ExternalLink,
   FileSearch,
   FileImage,
   Files,
@@ -42,7 +41,6 @@ import extractTextImage from "@/assets/extract-text.webp";
 import shareEasilyImage from "@/assets/share-easily.webp";
 import pdfToolboxImage from "@/assets/pdf-toolbox.webp";
 
-import { Button } from "@/components/ui/button";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { appDetails, COMPANY_URL, PLAY_STORE_URL, productFacts, reviews } from "@/content/product";
 
@@ -813,29 +811,129 @@ function HomePage() {
           </div>
         </section>
 
-        <section
-          id="download"
-          className="reveal cta-section bg-primary py-14 text-primary-foreground sm:py-20"
-          data-reveal
-        >
-          <div className="mx-auto max-w-4xl px-5 text-center">
-            <p className="text-sm font-bold uppercase">Version 6.3.0</p>
-            <h2 className="mt-4 text-4xl font-black sm:text-5xl">
-              Carry a document scanner in your pocket
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-primary-foreground/80">
-              Download PDF Scanner - Document Scanner on Google Play and scan documents to PDF
-              wherever you are.
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="cta-button mt-8 bg-primary-foreground px-7 text-primary hover:bg-primary-foreground/90"
-            >
-              <a href={PLAY_STORE_URL} target="_blank" rel="noreferrer">
-                View on Google Play <ExternalLink />
-              </a>
-            </Button>
+        <section id="download" className="dl-section" data-reveal>
+          <div className="dl-card">
+            <div className="dl-copy">
+              <p className="dl-eyebrow">
+                <span className="dl-pulse" aria-hidden="true" />
+                Version 6.3.0 · Updated August 27, 2026
+              </p>
+              <h2 className="dl-title">
+                Carry a document scanner <span>in your pocket</span>
+              </h2>
+              <p className="dl-text">
+                Download PDF Scanner - Document Scanner on Google Play and scan documents to PDF
+                wherever you are.
+              </p>
+              <div className="dl-actions">
+                <a
+                  href={PLAY_STORE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="dl-play"
+                  aria-label="Get PDF Scanner on Google Play"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-1 .6-1.2Z"
+                      fill="#00d7fe"
+                    />
+                    <path
+                      d="m17.2 8.6-3.4 3.4 3.4 3.4 3.9-2.2c.9-.5.9-1.9 0-2.4l-3.9-2.2Z"
+                      fill="#ffce00"
+                    />
+                    <path d="M3.6 1.8c.3-.2.8-.2 1.2 0l12.4 6.8-3.4 3.4L3.6 1.8Z" fill="#00f076" />
+                    <path
+                      d="M13.8 12 17.2 15.4 4.8 22.2c-.4.2-.9.2-1.2 0L13.8 12Z"
+                      fill="#ff3a44"
+                    />
+                  </svg>
+                  <span>
+                    <small>Get it on</small>
+                    <strong>Google Play</strong>
+                  </span>
+                </a>
+                <a href="/#tools" className="dl-secondary">
+                  Or use the web tools <ArrowRight aria-hidden="true" />
+                </a>
+              </div>
+              <dl className="dl-stats">
+                <div>
+                  <dt>Downloads</dt>
+                  <dd>50M+</dd>
+                </div>
+                <div>
+                  <dt>Rating</dt>
+                  <dd>
+                    4.8 <Star aria-hidden="true" />
+                  </dd>
+                </div>
+                <div>
+                  <dt>Reviews</dt>
+                  <dd>476K</dd>
+                </div>
+                <div>
+                  <dt>Android</dt>
+                  <dd>7.0+</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div className="dl-visual" aria-hidden="true">
+              <span className="dl-ring dl-ring-1" />
+              <span className="dl-ring dl-ring-2" />
+              <div className="dl-phone">
+                <span className="dl-notch" />
+                <div className="dl-screen">
+                  <div className="dl-doc">
+                    <i className="dl-doc-title" />
+                    <i />
+                    <i />
+                    <i />
+                    <i className="dl-short" />
+                    <i />
+                    <i />
+                    <i className="dl-short" />
+                    <span className="dl-doc-sign">
+                      <i />
+                      <i />
+                    </span>
+                  </div>
+                  <span className="dl-corner dl-tl" />
+                  <span className="dl-corner dl-tr" />
+                  <span className="dl-corner dl-bl" />
+                  <span className="dl-corner dl-br" />
+                  <span className="dl-beam" />
+                </div>
+                <div className="dl-shutter">
+                  <span className="dl-thumb" />
+                  <span className="dl-button" />
+                  <span className="dl-mode" />
+                </div>
+              </div>
+              <div className="dl-chip dl-chip-pdf">
+                <span className="dl-chip-icon">
+                  <FileText />
+                </span>
+                <span>
+                  <strong>Scan_0924.pdf</strong>
+                  <small>Saved · 1 page</small>
+                </span>
+              </div>
+              <div className="dl-chip dl-chip-ocr">
+                <span className="dl-chip-icon">
+                  <ScanText />
+                </span>
+                <span>
+                  <strong>Text recognized</strong>
+                  <small>Searchable PDF</small>
+                </span>
+              </div>
+              <div className="dl-chip dl-chip-secure">
+                <ShieldCheck />
+                <span>On-device</span>
+              </div>
+            </div>
           </div>
         </section>
       </main>

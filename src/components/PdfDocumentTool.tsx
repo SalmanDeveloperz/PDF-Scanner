@@ -73,7 +73,7 @@ export function PdfDocumentTool({ mode }: { mode: PdfDocumentToolMode }) {
   const [items, setItems] = useState<PdfMarkup[]>([]);
   const [markupType, setMarkupType] = useState<PdfMarkup["type"]>("text");
   const [text, setText] = useState("");
-  const [color, setColor] = useState("#b30015");
+  const [color, setColor] = useState("#bd0016");
   const [fontSize, setFontSize] = useState(16);
   const [margins, setMargins] = useState<CropMargins>({ top: 24, right: 24, bottom: 24, left: 24 });
   const [startNumber, setStartNumber] = useState(1);
