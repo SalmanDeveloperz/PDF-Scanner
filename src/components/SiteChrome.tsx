@@ -317,15 +317,11 @@ export function SiteHeader() {
         <DesktopNav />
         <div className="sc-header-actions">
           <ToolSearch />
-          <a
-            href="/#reviews"
-            className="sc-rating"
-            aria-label="Rated 4.8 on Google Play by 50 million+ users"
-          >
-            <Star className="sc-star" aria-hidden="true" />
+          <a href="/#details" className="sc-download-stat" aria-label="50 million plus downloads">
+            <Download className="sc-download-stat-icon" aria-hidden="true" />
             <span>
-              <strong>4.8</strong>
-              <small>50M+ users</small>
+              <strong>50M+</strong>
+              <small>downloads</small>
             </span>
           </a>
           <a href={PLAY_STORE_URL} target="_blank" rel="noreferrer" className="sc-cta">

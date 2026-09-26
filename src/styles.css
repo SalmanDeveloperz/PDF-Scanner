@@ -2265,8 +2265,8 @@ main .mx-auto.max-w-7xl {
   font-size: 0.8rem;
 }
 
-/* ---------- Rating + CTA ---------- */
-.sc-rating {
+/* ---------- Download proof + CTA ---------- */
+.sc-download-stat {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -2275,30 +2275,29 @@ main .mx-auto.max-w-7xl {
   white-space: nowrap;
 }
 
-.sc-rating:hover {
+.sc-download-stat:hover {
   background: var(--brand-red-50);
 }
 
-.sc-star {
+.sc-download-stat-icon {
   width: 1.1rem;
   height: 1.1rem;
-  fill: var(--rating);
-  color: var(--rating);
+  color: var(--brand-red);
 }
 
-.sc-rating strong,
-.sc-rating small {
+.sc-download-stat strong,
+.sc-download-stat small {
   display: block;
   line-height: 1.1;
 }
 
-.sc-rating strong {
+.sc-download-stat strong {
   color: var(--foreground);
   font-size: 0.85rem;
   font-weight: 850;
 }
 
-.sc-rating small {
+.sc-download-stat small {
   color: var(--muted-foreground);
   font-size: 0.66rem;
   font-weight: 700;
@@ -2311,7 +2310,7 @@ main .mx-auto.max-w-7xl {
   gap: 0.45rem;
   padding-inline: 1rem;
   border-radius: 0.7rem;
-  background: linear-gradient(180deg, var(--brand-red-500), var(--brand-red));
+  background: #b30015;
   color: #fff;
   font-size: 0.86rem;
   font-weight: 800;
@@ -2780,17 +2779,9 @@ main header > .bg-accent:first-child {
   .sc-search input {
     width: 12.5rem;
   }
-
-  .sc-rating small {
-    display: none;
-  }
 }
 
 @media (max-width: 1320px) {
-  .sc-rating {
-    display: none;
-  }
-
   .sc-nav-trigger {
     padding-inline: 0.55rem;
     font-size: 0.82rem;
@@ -2864,6 +2855,10 @@ main header > .bg-accent:first-child {
   }
 
   .sc-search-header {
+    display: none;
+  }
+
+  .sc-download-stat {
     display: none;
   }
 
