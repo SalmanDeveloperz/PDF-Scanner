@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
+import netlify from "@netlify/vite-plugin-tanstack-start";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
@@ -12,11 +13,12 @@ export default defineConfig({
       pages: [{ path: "/" }],
       prerender: {
         enabled: true,
-        concurrency: 2,
+        concurrency: 1,
         retryCount: 3,
         retryDelay: 1_000,
       },
     }),
+    netlify(),
     react(),
     tailwindcss(),
   ],
