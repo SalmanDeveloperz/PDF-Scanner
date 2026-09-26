@@ -1,5 +1,7 @@
 import { useState } from "react";
 import {
+  Presentation,
+  FileSpreadsheet,
   ArrowRight,
   ArrowUpRight,
   BookOpen,
@@ -92,6 +94,9 @@ const pdfItems = [
   { icon: Files, title: "Merge PDF", text: "Combine documents in order", href: "/merge-pdf" },
   { icon: FileImage, title: "Image to PDF", text: "Turn photos into pages", href: "/image-to-pdf" },
   { icon: FileImage, title: "PDF to JPG", text: "Export pages as images", href: "/pdf-to-jpg" },
+  { icon: FileText, title: "Word to PDF", text: "Convert DOCX documents", href: "/word-to-pdf" },
+  { icon: FileSpreadsheet, title: "Excel to PDF", text: "Convert XLSX and CSV sheets", href: "/excel-to-pdf" },
+  { icon: Presentation, title: "PowerPoint to PDF", text: "Convert PPTX slides", href: "/powerpoint-to-pdf" },
   {
     icon: LockKeyhole,
     title: "Lock PDF",
@@ -359,6 +364,9 @@ const footerTools = [
   ["Flatten PDF", "/flatten-pdf"],
   ["PDF/A archive", "/pdfa-archive"],
   ["PDF to JPG", "/pdf-to-jpg"],
+  ["Word to PDF", "/word-to-pdf"],
+  ["Excel to PDF", "/excel-to-pdf"],
+  ["PowerPoint to PDF", "/powerpoint-to-pdf"],
   ["Clean PDF metadata", "/clean-pdf-metadata"],
   ["Compare PDFs", "/compare-pdfs"],
   ["Redact PDF", "/redact-pdf"],

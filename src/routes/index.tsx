@@ -144,17 +144,20 @@ const toolGroups = [
       {
         icon: FileInput,
         title: "Word to PDF",
-        description: "Create a PDF from DOC and DOCX files.",
+        description: "Create a PDF from DOCX documents.",
+        href: "/word-to-pdf",
       },
       {
         icon: FileInput,
         title: "Excel to PDF",
-        description: "Create a PDF from spreadsheet files.",
+        description: "Create a PDF from XLSX and CSV spreadsheets.",
+        href: "/excel-to-pdf",
       },
       {
         icon: FileInput,
         title: "PowerPoint to PDF",
-        description: "Create a PDF from slide presentations.",
+        description: "Create a PDF from PPTX slide presentations.",
+        href: "/powerpoint-to-pdf",
       },
     ],
   },

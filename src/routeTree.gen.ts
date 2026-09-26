@@ -16,6 +16,7 @@ import { Route as ComparePdfsRouteImport } from './routes/compare-pdfs'
 import { Route as CompressPdfRouteImport } from './routes/compress-pdf'
 import { Route as CropPdfRouteImport } from './routes/crop-pdf'
 import { Route as EditPdfRouteImport } from './routes/edit-pdf'
+import { Route as ExcelToPdfRouteImport } from './routes/excel-to-pdf'
 import { Route as ExtractPagesRouteImport } from './routes/extract-pages'
 import { Route as FlattenPdfRouteImport } from './routes/flatten-pdf'
 import { Route as ImageToPdfRouteImport } from './routes/image-to-pdf'
@@ -27,6 +28,7 @@ import { Route as PageNumbersRouteImport } from './routes/page-numbers'
 import { Route as PdfToJpgRouteImport } from './routes/pdf-to-jpg'
 import { Route as PdfaArchiveRouteImport } from './routes/pdfa-archive'
 import { Route as PhotoToSearchablePdfRouteImport } from './routes/photo-to-searchable-pdf'
+import { Route as PowerpointToPdfRouteImport } from './routes/powerpoint-to-pdf'
 import { Route as ReceiptDataExtractorRouteImport } from './routes/receipt-data-extractor'
 import { Route as RedactPdfRouteImport } from './routes/redact-pdf'
 import { Route as RemovePagesRouteImport } from './routes/remove-pages'
@@ -37,6 +39,7 @@ import { Route as SmartPageCleanupRouteImport } from './routes/smart-page-cleanu
 import { Route as SplitPdfRouteImport } from './routes/split-pdf'
 import { Route as UnlockPdfRouteImport } from './routes/unlock-pdf'
 import { Route as WatermarkPdfRouteImport } from './routes/watermark-pdf'
+import { Route as WordToPdfRouteImport } from './routes/word-to-pdf'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -71,6 +74,11 @@ const CropPdfRoute = CropPdfRouteImport.update({
 const EditPdfRoute = EditPdfRouteImport.update({
   id: '/edit-pdf',
   path: '/edit-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExcelToPdfRoute = ExcelToPdfRouteImport.update({
+  id: '/excel-to-pdf',
+  path: '/excel-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExtractPagesRoute = ExtractPagesRouteImport.update({
@@ -128,6 +136,11 @@ const PhotoToSearchablePdfRoute = PhotoToSearchablePdfRouteImport.update({
   path: '/photo-to-searchable-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PowerpointToPdfRoute = PowerpointToPdfRouteImport.update({
+  id: '/powerpoint-to-pdf',
+  path: '/powerpoint-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReceiptDataExtractorRoute = ReceiptDataExtractorRouteImport.update({
   id: '/receipt-data-extractor',
   path: '/receipt-data-extractor',
@@ -178,6 +191,11 @@ const WatermarkPdfRoute = WatermarkPdfRouteImport.update({
   path: '/watermark-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WordToPdfRoute = WordToPdfRouteImport.update({
+  id: '/word-to-pdf',
+  path: '/word-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -187,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/compress-pdf': typeof CompressPdfRoute
   '/crop-pdf': typeof CropPdfRoute
   '/edit-pdf': typeof EditPdfRoute
+  '/excel-to-pdf': typeof ExcelToPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
@@ -198,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
   '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
+  '/powerpoint-to-pdf': typeof PowerpointToPdfRoute
   '/receipt-data-extractor': typeof ReceiptDataExtractorRoute
   '/redact-pdf': typeof RedactPdfRoute
   '/remove-pages': typeof RemovePagesRoute
@@ -208,6 +228,7 @@ export interface FileRoutesByFullPath {
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
   '/watermark-pdf': typeof WatermarkPdfRoute
+  '/word-to-pdf': typeof WordToPdfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -217,6 +238,7 @@ export interface FileRoutesByTo {
   '/compress-pdf': typeof CompressPdfRoute
   '/crop-pdf': typeof CropPdfRoute
   '/edit-pdf': typeof EditPdfRoute
+  '/excel-to-pdf': typeof ExcelToPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
@@ -228,6 +250,7 @@ export interface FileRoutesByTo {
   '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
   '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
+  '/powerpoint-to-pdf': typeof PowerpointToPdfRoute
   '/receipt-data-extractor': typeof ReceiptDataExtractorRoute
   '/redact-pdf': typeof RedactPdfRoute
   '/remove-pages': typeof RemovePagesRoute
@@ -238,6 +261,7 @@ export interface FileRoutesByTo {
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
   '/watermark-pdf': typeof WatermarkPdfRoute
+  '/word-to-pdf': typeof WordToPdfRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -248,6 +272,7 @@ export interface FileRoutesById {
   '/compress-pdf': typeof CompressPdfRoute
   '/crop-pdf': typeof CropPdfRoute
   '/edit-pdf': typeof EditPdfRoute
+  '/excel-to-pdf': typeof ExcelToPdfRoute
   '/extract-pages': typeof ExtractPagesRoute
   '/flatten-pdf': typeof FlattenPdfRoute
   '/image-to-pdf': typeof ImageToPdfRoute
@@ -259,6 +284,7 @@ export interface FileRoutesById {
   '/pdf-to-jpg': typeof PdfToJpgRoute
   '/pdfa-archive': typeof PdfaArchiveRoute
   '/photo-to-searchable-pdf': typeof PhotoToSearchablePdfRoute
+  '/powerpoint-to-pdf': typeof PowerpointToPdfRoute
   '/receipt-data-extractor': typeof ReceiptDataExtractorRoute
   '/redact-pdf': typeof RedactPdfRoute
   '/remove-pages': typeof RemovePagesRoute
@@ -269,6 +295,7 @@ export interface FileRoutesById {
   '/split-pdf': typeof SplitPdfRoute
   '/unlock-pdf': typeof UnlockPdfRoute
   '/watermark-pdf': typeof WatermarkPdfRoute
+  '/word-to-pdf': typeof WordToPdfRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -280,6 +307,7 @@ export interface FileRouteTypes {
     | '/compress-pdf'
     | '/crop-pdf'
     | '/edit-pdf'
+    | '/excel-to-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
     | '/image-to-pdf'
@@ -291,6 +319,7 @@ export interface FileRouteTypes {
     | '/pdf-to-jpg'
     | '/pdfa-archive'
     | '/photo-to-searchable-pdf'
+    | '/powerpoint-to-pdf'
     | '/receipt-data-extractor'
     | '/redact-pdf'
     | '/remove-pages'
@@ -301,6 +330,7 @@ export interface FileRouteTypes {
     | '/split-pdf'
     | '/unlock-pdf'
     | '/watermark-pdf'
+    | '/word-to-pdf'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -310,6 +340,7 @@ export interface FileRouteTypes {
     | '/compress-pdf'
     | '/crop-pdf'
     | '/edit-pdf'
+    | '/excel-to-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
     | '/image-to-pdf'
@@ -321,6 +352,7 @@ export interface FileRouteTypes {
     | '/pdf-to-jpg'
     | '/pdfa-archive'
     | '/photo-to-searchable-pdf'
+    | '/powerpoint-to-pdf'
     | '/receipt-data-extractor'
     | '/redact-pdf'
     | '/remove-pages'
@@ -331,6 +363,7 @@ export interface FileRouteTypes {
     | '/split-pdf'
     | '/unlock-pdf'
     | '/watermark-pdf'
+    | '/word-to-pdf'
   id:
     | '__root__'
     | '/'
@@ -340,6 +373,7 @@ export interface FileRouteTypes {
     | '/compress-pdf'
     | '/crop-pdf'
     | '/edit-pdf'
+    | '/excel-to-pdf'
     | '/extract-pages'
     | '/flatten-pdf'
     | '/image-to-pdf'
@@ -351,6 +385,7 @@ export interface FileRouteTypes {
     | '/pdf-to-jpg'
     | '/pdfa-archive'
     | '/photo-to-searchable-pdf'
+    | '/powerpoint-to-pdf'
     | '/receipt-data-extractor'
     | '/redact-pdf'
     | '/remove-pages'
@@ -361,6 +396,7 @@ export interface FileRouteTypes {
     | '/split-pdf'
     | '/unlock-pdf'
     | '/watermark-pdf'
+    | '/word-to-pdf'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -371,6 +407,7 @@ export interface RootRouteChildren {
   CompressPdfRoute: typeof CompressPdfRoute
   CropPdfRoute: typeof CropPdfRoute
   EditPdfRoute: typeof EditPdfRoute
+  ExcelToPdfRoute: typeof ExcelToPdfRoute
   ExtractPagesRoute: typeof ExtractPagesRoute
   FlattenPdfRoute: typeof FlattenPdfRoute
   ImageToPdfRoute: typeof ImageToPdfRoute
@@ -382,6 +419,7 @@ export interface RootRouteChildren {
   PdfToJpgRoute: typeof PdfToJpgRoute
   PdfaArchiveRoute: typeof PdfaArchiveRoute
   PhotoToSearchablePdfRoute: typeof PhotoToSearchablePdfRoute
+  PowerpointToPdfRoute: typeof PowerpointToPdfRoute
   ReceiptDataExtractorRoute: typeof ReceiptDataExtractorRoute
   RedactPdfRoute: typeof RedactPdfRoute
   RemovePagesRoute: typeof RemovePagesRoute
@@ -392,6 +430,7 @@ export interface RootRouteChildren {
   SplitPdfRoute: typeof SplitPdfRoute
   UnlockPdfRoute: typeof UnlockPdfRoute
   WatermarkPdfRoute: typeof WatermarkPdfRoute
+  WordToPdfRoute: typeof WordToPdfRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -443,6 +482,13 @@ declare module '@tanstack/react-router' {
       path: '/edit-pdf'
       fullPath: '/edit-pdf'
       preLoaderRoute: typeof EditPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/excel-to-pdf': {
+      id: '/excel-to-pdf'
+      path: '/excel-to-pdf'
+      fullPath: '/excel-to-pdf'
+      preLoaderRoute: typeof ExcelToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/extract-pages': {
@@ -522,6 +568,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PhotoToSearchablePdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/powerpoint-to-pdf': {
+      id: '/powerpoint-to-pdf'
+      path: '/powerpoint-to-pdf'
+      fullPath: '/powerpoint-to-pdf'
+      preLoaderRoute: typeof PowerpointToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/receipt-data-extractor': {
       id: '/receipt-data-extractor'
       path: '/receipt-data-extractor'
@@ -592,6 +645,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatermarkPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/word-to-pdf': {
+      id: '/word-to-pdf'
+      path: '/word-to-pdf'
+      fullPath: '/word-to-pdf'
+      preLoaderRoute: typeof WordToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -603,6 +663,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompressPdfRoute: CompressPdfRoute,
   CropPdfRoute: CropPdfRoute,
   EditPdfRoute: EditPdfRoute,
+  ExcelToPdfRoute: ExcelToPdfRoute,
   ExtractPagesRoute: ExtractPagesRoute,
   FlattenPdfRoute: FlattenPdfRoute,
   ImageToPdfRoute: ImageToPdfRoute,
@@ -614,6 +675,7 @@ const rootRouteChildren: RootRouteChildren = {
   PdfToJpgRoute: PdfToJpgRoute,
   PdfaArchiveRoute: PdfaArchiveRoute,
   PhotoToSearchablePdfRoute: PhotoToSearchablePdfRoute,
+  PowerpointToPdfRoute: PowerpointToPdfRoute,
   ReceiptDataExtractorRoute: ReceiptDataExtractorRoute,
   RedactPdfRoute: RedactPdfRoute,
   RemovePagesRoute: RemovePagesRoute,
@@ -624,6 +686,7 @@ const rootRouteChildren: RootRouteChildren = {
   SplitPdfRoute: SplitPdfRoute,
   UnlockPdfRoute: UnlockPdfRoute,
   WatermarkPdfRoute: WatermarkPdfRoute,
+  WordToPdfRoute: WordToPdfRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
